@@ -1,7 +1,7 @@
 {
     "generator": "site",
-    "title": "Test GitBook",
-    "description": "This is a test book",
+    "title": “MaidSafe Examples”,
+    "description": "Examples of the SAFE Network”,
     "github": null,
     "githubHost": "https://github.com/",
     "plugins": ["ga", "disqus"],
