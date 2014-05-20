@@ -1,0 +1,25 @@
+{
+    "generator": "site",
+    "title": "MaidSafe Examples",
+    "description": "Examples for the SAFE Network",
+    "github": null,
+    "githubHost": "https://github.com/",
+    "plugins": ["ga", "disqus"],
+    "pluginsConfig": {
+        "ga": {
+            "token": "UA-32549768-2"
+        },
+        "disqus": {
+            "shortName": "maidsafe-examples"
+    }
+},
+    "links": {
+        "home": "https://github.com/maidsafe/maidsafe-examples/tree/master",
+        "about": "http://maidsafe.net",
+        "issues": "https://github.com/maidsafe/maidsafe-examples/issues",
+        "sharing": {
+            "google": "https://plus.google.com/u/0/+MaidsafeNet/posts",
+            "twitter": "https://twitter.com/maidsafe"
+        }
+    }
+}
