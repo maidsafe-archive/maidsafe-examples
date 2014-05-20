@@ -1,9 +1,9 @@
 CACHE MANIFEST
-# Revision 1400596722166
+# Revision 1400597631698
 
 CACHE:
 index.html
-example_zero/README.html
+example_zero/intro.html
 example_zero/local_network_setup.html
 example_zero/requirements.html
 gitbook\app.js
@@ -43,9 +43,9 @@ gitbook\jsrepl\sandbox.js
 gitbook\print.css
 gitbook\style.css
 gitbook\plugins\gitbook-plugin-ga\plugin.js
-gitbook\plugins\gitbook-plugin-mathjax\plugin.js
-gitbook\plugins\gitbook-plugin-mixpanel\plugin.js
 gitbook\plugins\gitbook-plugin-disqus\plugin.js
+gitbook\plugins\gitbook-plugin-mixpanel\plugin.js
+gitbook\plugins\gitbook-plugin-mathjax\plugin.js
 
 NETWORK:
 *
