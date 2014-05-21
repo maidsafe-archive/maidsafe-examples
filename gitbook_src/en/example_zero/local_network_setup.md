@@ -31,6 +31,8 @@ To get round this, we create a bundle of keys (one per vault) before the network
 
 Once the network has started, the tool proceeds to store the public keys to the network properly, and at that stage, the network can behave normally.
 
+Each Vault needs to be connected to a minimum number of peer Vaults before it considers itself joined to the network.  For this reason the tool enforces a minimum local network size  (currently 10).
+
 Provided everything runs fine, you should now see something like:
 
 ![Local Network Controller - Network Started](./img/network_started.PNG)
