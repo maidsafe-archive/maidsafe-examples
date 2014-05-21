@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
         
         <meta charset="UTF-8">
-        <title>Example 0 | MaidSafe Examples</title>
+        <title>Requirements | MaidSafe Examples</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
@@ -13,13 +13,13 @@
         <meta name="generator" content="www.gitbook.io">
 
         
-        <link rel="next" href="../example_zero/requirements.html" />
+        <link rel="next" href="../001_network_setup/local_network_setup.html" />
         
         
-        <link rel="prev" href="../index.html" />
+        <link rel="prev" href="../001_network_setup/intro.html" />
         
 
-        <meta property="og:title" content="Example 0 | MaidSafe Examples">
+        <meta property="og:title" content="Requirements | MaidSafe Examples">
         <meta property="og:site_name" content="MaidSafe Examples">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
@@ -42,7 +42,7 @@
 
 
         
-    <div class="book" data-github="maidsafe/maidsafe-examples" data-level="1" data-basepath=".." data-revision="1400672343332">
+    <div class="book" data-github="maidsafe/maidsafe-examples" data-level="1.1" data-basepath=".." data-revision="1400675406073">
     <div class="book-header">
     <!-- Actions Left -->
     
@@ -120,7 +120,7 @@
 
         
         <li>
-            <a href="https://github.com/maidsafe/maidsafe-examples/edit/master/example_zero/intro.md" target="blank">Edit and Contribute</a>
+            <a href="https://github.com/maidsafe/maidsafe-examples/edit/master/001_network_setup/requirements.md" target="blank">Edit and Contribute</a>
         </li>
         
 
@@ -132,32 +132,39 @@
             <a href="../"><i class="fa fa-check"></i> Introduction</a>
         </li>
         
-            <li  data-level="1" data-path="example_zero/intro.html">
+            <li  data-level="1" data-path="001_network_setup/intro.html">
                 
-                <a href="../example_zero/intro.html">
-                    <i class="fa fa-check"></i> <b>1.</b> Example 0
+                <a href="../001_network_setup/intro.html">
+                    <i class="fa fa-check"></i> <b>1.</b> Network Setup
                 </a>
                 
                 
                 <ul class="articles">
                     
-                        <li  data-level="1.1" data-path="example_zero/requirements.html">
+                        <li  data-level="1.1" data-path="001_network_setup/requirements.html">
                             
-                            <a href="../example_zero/requirements.html">
+                            <a href="../001_network_setup/requirements.html">
                                 <i class="fa fa-check"></i> <b>1.1.</b> Requirements
                             </a>
                             
                         </li>
                     
-                        <li  data-level="1.2" data-path="example_zero/local_network_setup.html">
+                        <li  data-level="1.2" data-path="001_network_setup/local_network_setup.html">
                             
-                            <a href="../example_zero/local_network_setup.html">
+                            <a href="../001_network_setup/local_network_setup.html">
                                 <i class="fa fa-check"></i> <b>1.2.</b> Local Network Setup
                             </a>
                             
                         </li>
                     
                 </ul>
+                
+            </li>
+        
+            <li  data-level="2" >
+                
+                <span><b>2.</b> Authentication</span>
+                
                 
             </li>
         
@@ -176,29 +183,30 @@
             <div class="page-wrapper" tabindex="-1">
                 <div class="book-progress">
     <div class="bar">
-        <div class="inner" style="width: 33.333333333333336%;min-width: 0%;"></div>
+        <div class="inner" style="width: 66.66666666666667%;min-width: 33.333333333333336%;"></div>
     </div>
     <div class="chapters">
     
         <a href="../index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
     
-        <a href="../example_zero/intro.html" title="Example 0" class="chapter done new-chapter" data-progress="1" style="left: 33.333333333333336%;"></a>
+        <a href="../001_network_setup/intro.html" title="Network Setup" class="chapter done new-chapter" data-progress="1" style="left: 33.333333333333336%;"></a>
     
-        <a href="../example_zero/requirements.html" title="Requirements" class="chapter  " data-progress="1.1" style="left: 66.66666666666667%;"></a>
+        <a href="../001_network_setup/requirements.html" title="Requirements" class="chapter done " data-progress="1.1" style="left: 66.66666666666667%;"></a>
     
-        <a href="../example_zero/local_network_setup.html" title="Local Network Setup" class="chapter  " data-progress="1.2" style="left: 100%;"></a>
+        <a href="../001_network_setup/local_network_setup.html" title="Local Network Setup" class="chapter  " data-progress="1.2" style="left: 100%;"></a>
     
     </div>
 </div>
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_2">
+                    <section class="normal" id="section-gitbook_4">
                     
-                        <h1 id="example-0-hello-network">Example 0 - Hello Network</h1>
-<p>In this example our objective is to create a local test network on a single machine which can later be used to test various network operations via the API project.</p>
-<p><strong>Note:</strong> This example is a must have requirement to successfully run any of the future examples as it provides the test-bed for other examples to operate on.</p>
-<p>With that in mind, this example demonstrates a tool that should be easy to use and get the network set up with minimal effort. This tool is bundled with the MaidSafe Super project.</p>
+                        <h1 id="requirements">Requirements</h1>
+<p>Pretty simple requirements for this example.</p>
+<ul>
+<li>Follow the <a href="https://github.com/maidsafe/MaidSafe/wiki" target="_blank">build instructions</a> for your OS to get your machine&#39;s build environment set up and ready to build the MaidSafe Super project. If you have trouble with this, please do let us know via the <a href="https://groups.google.com/forum/#!forum/maidsafe-development" target="_blank">Developers mailing list</a> or the <a href="https://www.maidsafe.org/" target="_blank">maidsafe.org forum</a>. You can also <a href="https://github.com/maidsafe/MaidSafe/issues?state=open" target="_blank">submit an issue</a> on github if you wish to report via github.</li>
+</ul>
 
                     
                     </section>
@@ -208,10 +216,10 @@
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev "><i class="fa fa-angle-left"></i></a>
+        <a href="../001_network_setup/intro.html" class="navigation navigation-prev "><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../example_zero/requirements.html" class="navigation navigation-next "><i class="fa fa-angle-right"></i></a>
+        <a href="../001_network_setup/local_network_setup.html" class="navigation navigation-next "><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

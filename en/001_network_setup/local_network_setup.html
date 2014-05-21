@@ -14,7 +14,7 @@
 
         
         
-        <link rel="prev" href="../example_zero/requirements.html" />
+        <link rel="prev" href="../001_network_setup/requirements.html" />
         
 
         <meta property="og:title" content="Local Network Setup | MaidSafe Examples">
@@ -40,7 +40,7 @@
 
 
         
-    <div class="book" data-github="maidsafe/maidsafe-examples" data-level="1.2" data-basepath=".." data-revision="1400672343332">
+    <div class="book" data-github="maidsafe/maidsafe-examples" data-level="1.2" data-basepath=".." data-revision="1400675406073">
     <div class="book-header">
     <!-- Actions Left -->
     
@@ -118,7 +118,7 @@
 
         
         <li>
-            <a href="https://github.com/maidsafe/maidsafe-examples/edit/master/example_zero/local_network_setup.md" target="blank">Edit and Contribute</a>
+            <a href="https://github.com/maidsafe/maidsafe-examples/edit/master/001_network_setup/local_network_setup.md" target="blank">Edit and Contribute</a>
         </li>
         
 
@@ -130,32 +130,39 @@
             <a href="../"><i class="fa fa-check"></i> Introduction</a>
         </li>
         
-            <li  data-level="1" data-path="example_zero/intro.html">
+            <li  data-level="1" data-path="001_network_setup/intro.html">
                 
-                <a href="../example_zero/intro.html">
-                    <i class="fa fa-check"></i> <b>1.</b> Example 0
+                <a href="../001_network_setup/intro.html">
+                    <i class="fa fa-check"></i> <b>1.</b> Network Setup
                 </a>
                 
                 
                 <ul class="articles">
                     
-                        <li  data-level="1.1" data-path="example_zero/requirements.html">
+                        <li  data-level="1.1" data-path="001_network_setup/requirements.html">
                             
-                            <a href="../example_zero/requirements.html">
+                            <a href="../001_network_setup/requirements.html">
                                 <i class="fa fa-check"></i> <b>1.1.</b> Requirements
                             </a>
                             
                         </li>
                     
-                        <li  data-level="1.2" data-path="example_zero/local_network_setup.html">
+                        <li  data-level="1.2" data-path="001_network_setup/local_network_setup.html">
                             
-                            <a href="../example_zero/local_network_setup.html">
+                            <a href="../001_network_setup/local_network_setup.html">
                                 <i class="fa fa-check"></i> <b>1.2.</b> Local Network Setup
                             </a>
                             
                         </li>
                     
                 </ul>
+                
+            </li>
+        
+            <li  data-level="2" >
+                
+                <span><b>2.</b> Authentication</span>
+                
                 
             </li>
         
@@ -180,30 +187,28 @@
     
         <a href="../index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
     
-        <a href="../example_zero/intro.html" title="Example 0" class="chapter done new-chapter" data-progress="1" style="left: 33.333333333333336%;"></a>
+        <a href="../001_network_setup/intro.html" title="Network Setup" class="chapter done new-chapter" data-progress="1" style="left: 33.333333333333336%;"></a>
     
-        <a href="../example_zero/requirements.html" title="Requirements" class="chapter done " data-progress="1.1" style="left: 66.66666666666667%;"></a>
+        <a href="../001_network_setup/requirements.html" title="Requirements" class="chapter done " data-progress="1.1" style="left: 66.66666666666667%;"></a>
     
-        <a href="../example_zero/local_network_setup.html" title="Local Network Setup" class="chapter done " data-progress="1.2" style="left: 100%;"></a>
+        <a href="../001_network_setup/local_network_setup.html" title="Local Network Setup" class="chapter done " data-progress="1.2" style="left: 100%;"></a>
     
     </div>
 </div>
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_3">
+                    <section class="normal" id="section-gitbook_2">
                     
                         <h1 id="local-network-setup">Local Network Setup</h1>
 <p>So now that you have the build environment set up on your machine, the target we require for this example is &#39;<strong>local_network_controller</strong>&#39;. This serves as a client to connect to the vault manager and start the network with a bunch of vaults which we can then connect to in future examples.</p>
 <ul>
 <li>Go ahead and build the target &#39;local_network_controller&#39;</li>
+<li>Run the tool and you should see something like:</li>
 </ul>
 <blockquote>
 <p>Tip: If you want to see detailed logging info, you can pass <code>--log_* V</code> when invoking the tool.  For full logging options, see <a href="https://github.com/maidsafe/MaidSafe/wiki/Logging-Options#invoking-logging-arguments" target="_blank">this wiki page</a>.</p>
 </blockquote>
-<ul>
-<li>Run the tool and you should see something like:</li>
-</ul>
 <p><img src="img\start_screen.PNG" alt="Local Network Controller - Start Screen"></p>
 <p>For this example we are going to go with option &quot;1&quot;. Hit &quot;1&quot; and Enter. This lets us start a new network on this machine.</p>
 <p>You can provide custom settings where applicable for the various options in the tool such as &quot;Path to vault Executable&quot; or &quot;Number of Vaults to run the network with&quot;. Following the default options, you should see the tool function such as</p>
@@ -218,7 +223,7 @@
 <p>Each Vault needs to be connected to a minimum number of peer Vaults before it considers itself joined to the network.  For this reason the tool enforces a minimum local network size  (currently 10).</p>
 <p>Provided everything runs fine, you should now see something like:</p>
 <p><img src="img\network_started.PNG" alt="Local Network Controller - Network Started"></p>
-<p>As the message in the screenshot explains, we need to keep this tool running to keep the test network going on this machine. That brings us to the end of &quot;Example 0&quot;. If you&#39;re reading this, we hope you&#39;ve got a test net running on your machine, so gratz!!</p>
+<p>As the message in the screenshot explains, we need to keep this tool running to keep the test network alive on this machine. That brings us to the end of this Example. If you&#39;re reading this, we hope you&#39;ve got a test net running on your machine, so gratz!!</p>
 
                     
                     </section>
@@ -228,7 +233,7 @@
         </div>
 
         
-        <a href="../example_zero/requirements.html" class="navigation navigation-prev navigation-unique"><i class="fa fa-angle-left"></i></a>
+        <a href="../001_network_setup/requirements.html" class="navigation navigation-prev navigation-unique"><i class="fa fa-angle-left"></i></a>
         
         
     </div>

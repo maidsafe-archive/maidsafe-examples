@@ -1,11 +1,11 @@
 CACHE MANIFEST
-# Revision 1400672343332
+# Revision 1400675406073
 
 CACHE:
+001_network_setup/intro.html
+001_network_setup/local_network_setup.html
 index.html
-example_zero/intro.html
-example_zero/local_network_setup.html
-example_zero/requirements.html
+001_network_setup/requirements.html
 gitbook\app.js
 gitbook\fonts\anonymouspro\400.woff
 gitbook\fonts\anonymouspro\400i.woff
@@ -42,10 +42,10 @@ gitbook\jsrepl\sandbox.html
 gitbook\jsrepl\sandbox.js
 gitbook\print.css
 gitbook\style.css
-gitbook\plugins\gitbook-plugin-disqus\plugin.js
+gitbook\plugins\gitbook-plugin-ga\plugin.js
 gitbook\plugins\gitbook-plugin-mixpanel\plugin.js
 gitbook\plugins\gitbook-plugin-mathjax\plugin.js
-gitbook\plugins\gitbook-plugin-ga\plugin.js
+gitbook\plugins\gitbook-plugin-disqus\plugin.js
 
 NETWORK:
 *
