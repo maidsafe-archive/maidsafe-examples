@@ -6,5 +6,3 @@ Welcome to the MaidSafe Examples GitBook. This book provides a walkthrough to ge
 
 If you wish to add translation for this book in another language, please submit a pull request to the [github project for MaidSafe-Examples](https://github.com/maidsafe/maidsafe-examples/) on the master branch.
 
-![Example's project link image](./img/examples_project_link.png)
-

@@ -1,4 +1,4 @@
-# Example 0 - Hello Network
+# Network Setup
 
 In this example our objective is to create a local test network on a single machine which can later be used to test various network operations via the API project.
 
