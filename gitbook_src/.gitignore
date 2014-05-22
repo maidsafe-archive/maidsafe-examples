@@ -1,0 +1,6 @@
+# Temp Folders #
+################
+node_modules
+.grunt
+
+en/_book
