@@ -33,7 +33,7 @@ project(${ProjectName})
 #  Brings all the MaidSafe libraries into scope as CMake targets.                                  #
 #==================================================================================================#
 find_file(MaidSafeExport NAMES maidsafe_export.cmake
-                         PATHS ${MAIDSAFE_BINARY_DIR} ../build ../../build
+                         PATHS ${MAIDSAFE_BINARY_DIR}
                          NO_DEFAULT_PATH)
 
 if(NOT MaidSafeExport)
@@ -47,4 +47,5 @@ endif()
 
 include(${MaidSafeExport})
 
-add_subdirectory(src)
+add_executable(${ProjectName} main.cc)
+target_link_libraries(${ProjectName} maidsafe_api)

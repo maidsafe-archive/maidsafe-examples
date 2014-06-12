@@ -3,6 +3,7 @@
 #include "maidsafe/common/make_unique.h"
 #include "maidsafe/common/menu.h"
 #include "maidsafe/common/log.h"
+#include "maidsafe/common/types.h"
 #include "maidsafe/passport/passport.h"
 #include "maidsafe/routing/bootstrap_file_operations.h"
 #include "maidsafe/routing/parameters.h"
