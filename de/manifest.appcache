@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1403084977205
+# Revision 1403084977432
 
 CACHE:
 001_network_setup/intro.html
@@ -37,8 +37,8 @@ gitbook/jsrepl/sandbox.js
 gitbook/print.css
 gitbook/style.css
 gitbook/plugins/gitbook-plugin-ga/plugin.js
-gitbook/plugins/gitbook-plugin-mathjax/plugin.js
 gitbook/plugins/gitbook-plugin-disqus/plugin.js
+gitbook/plugins/gitbook-plugin-mathjax/plugin.js
 
 NETWORK:
 *
