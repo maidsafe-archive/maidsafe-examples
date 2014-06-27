@@ -8,21 +8,21 @@ If you wish to add translation for this book in another language, please submit 
 
 ## Setting up a new project with MaidSafe libs:
 
-MaidSafe-super project comes with a bunch of utility libs such as cli(command-line tool helper) sfml and qt, along with the native maidsafe libs. If you’re starting a new project, the following instructions should help you get your project setup with ease and link against these tools.
+MaidSafe Super-Project comes with many utility libraries such as CLI (command-line tool helper) SFML (low level graphics) and Qt (cross platform C++ UI based applications with widgets), along with the native MaidSafe libraries. If you’re starting a new project, the following instructions should help you get your project set up with ease and link against these tools.
 
-Firstly you would need to follow the Build instructions for your corresponding platform to get the Super project setup. With this out of the way all we need is to create a folder for this new project with a CMakeLists.txt file such as:
+Firstly you would need to follow the Build Instructions for [Linux](https://github.com/maidsafe/MaidSafe/wiki/Build-Instructions-for-Linux) / [OS X](https://github.com/maidsafe/MaidSafe/wiki/Build-Instructions-for-OS-X) / [Windows](https://github.com/maidsafe/MaidSafe/wiki/Build-Instructions-for-Windows) to get the Super-Project set up. With this out of the way we need to create a folder for this new project with a `CMakeLists.txt` file such as:
 
     cmake_minimum_required(VERSION 2.8.12.2 FATAL_ERROR)
 
     set(ProjectName "my_project")
     project(${ProjectName})
 
-#===================================================================#
-#  Brings all the MaidSafe libraries into scope as CMake targets.                                                  #
-#===================================================================#
+    #===================================================================#
+    #  Brings all the MaidSafe libraries into scope as CMake targets.   #
+    #===================================================================#
     find_file(MaidSafeExport NAMES maidsafe_export.cmake
-                         PATHS ${MAIDSAFE_BINARY_DIR}
-                         NO_DEFAULT_PATH)
+                             PATHS ${MAIDSAFE_BINARY_DIR}
+                             NO_DEFAULT_PATH)
 
     if(NOT MaidSafeExport)
       set(ErrorMessage "\n\nCan't find maidsafe_export.cmake in MAIDSAFE_BINARY_DIR.  ")
@@ -36,16 +36,16 @@ Firstly you would need to follow the Build instructions for your corresponding p
     include(${MaidSafeExport})
 
 
-The above code requires that cmake for this project be run with: “-DMAIDSAFE_BINARY_DIR=<path to MaidSafe super project build folder>” and it will accordingly import all of the MaidSafe targets into the new project’s scope to link against.
+CMake for this project needs to be run with: `-DMAIDSAFE_BINARY_DIR=<path to MaidSafe Super-Project build folder>`. This will import all the MaidSafe targets into the new project’s scope to link against.
 
 
 
-So in the new project if we have a main.cc that we want to link against the API project, all we need to add extra to this CMakeLists.txt file would be:
+To link against the API project, we need to add the following:
 
     add_executable(${ProjectName} main.cc)
     target_link_libraries(${ProjectName} maidsafe_api)
 
 
-That’s it for the entire CMakeLists.txt file. You can now choose to link against any of your required libs from the super project and get your project going. Good luck!!!
+You can now choose to link against any of your required libraries from the Super-Project and get your project going. Good luck!
 
-All MaidSafe-Examples that come with code snippets use this approach to link to their required libs.
+All MaidSafe-Examples that come with code snippets use this approach to link to their required libraries.
