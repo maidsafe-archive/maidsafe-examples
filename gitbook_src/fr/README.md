@@ -1,6 +1,6 @@
 # MaidSafe-Examples
 
-Bienvenu au GitBook des Examples MaidSafe. Ce livre offre une procédure pas à pas pour commencer à connaitre le réseau SAFE et ces projets API.
+Bienvenu au GitBook des Exemples MaidSafe. Ce livre offre une procédure pas à pas pour commencer à connaitre le réseau SAFE et ces projets API.
 
 ## Localisation
 

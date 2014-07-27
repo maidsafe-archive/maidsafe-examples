@@ -1,10 +1,12 @@
-# Network Setup
+# Configuration du réseau
 
-In this example our objective is to create a local test network on a single machine which can later be used to test various network operations via the API project.
+L'objectif de cet exemple est de créer un réseau-test local sur une seule machine.
+Ce réseau peut ensuire être utilisé pour tester plusieurs opération par le biais du projet API.
 
-**Note:** This example is a must have requirement to successfully run any of the future examples as it provides the test-bed for other examples to operate on.
+**Note:** Cet exemple est un prérequis obligatoire pour exécuter n'importe quel des exemples futures, car il offre une zone de test que les autres exemples peuvent utiliser.
 
-With that in mind, this example demonstrates a tool that should be easy to use and get the network set up with minimal effort. This tool is bundled with the MaidSafe Super project.
+Dans la même idée, cet exemple démontre un outil qui devrais être facile à utiliser et configurer le réseau avec un effort minimal. Cet outil est inclut dans le projet MaidSafe Super.
+
 
 
 
