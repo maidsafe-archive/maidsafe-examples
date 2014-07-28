@@ -1,17 +1,17 @@
-# Local Network Setup
+# Configuration du réseau local
 
-So now that you have the build environment set up on your machine, the target we require for this example is '**local_network_controller**'. This serves as a client to connect to the vault manager and start the network with a bunch of vaults which we can then connect to in future examples.
+Maintenant que vous avez configuré l'environement de compilation, la cible (target) requise pour cet exemple est '**local_network_controller**'. Ceci est utilisé comme un client pour se connecter au gestionnaire de vault et lancer le réseau avec un certain nombre de vaults desquels on peut se connecter dans de futures exemples.
 
-* Go ahead and build the target 'local_network_controller'
-* Run the tool and you should see something like:
+* Compilez la cible 'local_network_controller' (Sur Unix, make local_network_controller)
+* Lancez l'outil (local_network_controller) et vous devrez voir quelque chose comme cela:
 
-> Tip: If you want to see detailed logging info, you can pass `--log_* V` when invoking the tool.  For full logging options, see [this wiki page](https://github.com/maidsafe/MaidSafe/wiki/Logging-Options#invoking-logging-arguments).
+> Tip: Si vous voulez voir un log plus détaillé, vous pouvez ajouter `--log_* V` en lancant l'outil. Consultez [cette page wiki](https://github.com/maidsafe/MaidSafe/wiki/Logging-Options#invoking-logging-arguments) pour des options de log plus complètes.
 
 ![Local Network Controller - Start Screen](./img/start_screen.PNG)
 
-For this example we are going to go with option "1". Hit "1" and Enter. This lets us start a new network on this machine.
+Pour cet exemple, nous allons choisir l'option "1". Tapez "1" et Enter. Cela nous laisse créer un nouveau réseau sur cette machine.
 
-You can provide custom settings where applicable for the various options in the tool such as "Path to vault Executable" or "Number of Vaults to run the network with". Following the default options, you should see the tool function such as
+Vous pouvez utiliser des paramètres personnalisés, où applicable, pour de nombreuses options dans l'outil. Par exemple, "Path to vault Executable" (chemin vers l'éxecutable des vault) ou "Number of Vaults to run the network with" (nombre de vaults à lancer sur le réseau local). Suivant les options par défaut, vous devriez voir l'outil fonctionner comme ceci:
 
 ![Local Network Controller - Vault Manager Root Path](./img/vault_manager_root.PNG)
 
@@ -22,22 +22,21 @@ You can provide custom settings where applicable for the various options in the 
 ![Local Network Controller - Vault Count](./img/vaults_count.PNG)
 
 
-Now with the default option for "Vault count" the tool sets up a network with 12 Vaults (**this process may take a few minutes**). There are 2 extra vaults (zero state nodes) that are created as part of this process which get destroyed during the bootstrap phase.
+En utilisant les options par défaut pour le nombre de vault, l'outil configure le réseau avec 12 Vaults. Il y a deux vaults d'extra (zero state nodes) qui sont créées pendant le processus, et seront détruite pendant la phase de bootstrap.
 
-The issue is that for a brand new (i.e. "zero state") network, the Vaults aren't able to validate who they are connecting to, since no Vault has properly registered itself onto the network.  Vault registration involves storing the Vault's public keys onto the network - clearly this can't have happened *before* the network exists!
+Le problème est que pour les réseau tout neuf (zero state), les Vaults de sont pas capables de valider à qui elles sont connectées car aucunes Vaults ne s'est encore enregistrée sur le réseau. L'enregistrement d'une vault sur le réseau demande le stockage de la clé publique de cette Vault sur le réseau. Evidemment, cela n'as pas pu avoir lieu *avant* que le réseau n'existe!
 
-To get round this, we create a bundle of keys (one per vault) before the network starts, and the vault manager distributes the full list to each Vault it starts.  Thus the Vaults can cheat and get any of the initial peers' keys from this list rather than from the network.
+Pour contourner ce problème, nous créons un ensemble de clés (une par Vault) avant de lancer le réseau. L'organisateur de Vault (vault manager) distribue la liste complète de clés à toutes les Vaults avant le lancement. Ainsi, les Vaults peuvent tricher et avoir toutes les clés à partir de la liste au lieu d'à partir du réseau.
 
-Once the network has started, the tool proceeds to store the public keys to the network properly, and at that stage, the network can behave normally.
+Tout de suite après que le réseau soit lancé, l'outil va stocker les clés publiques proprement sur le réseau. À cette étape, le réseau peut fontionner normalement.
 
-Each Vault needs to be connected to a minimum number of peer Vaults before it considers itself joined to the network.  For this reason the tool enforces a minimum local network size  (currently 10).
+Chaque Vault à besoin d'être connectée à un nombre minimum d'autres Vaults avant de se considérer commme faisant partie du réseau. C'est pour cette raison que l'outil demande un minimum de 10 Vaults pour un réseau local.
 
-Provided everything runs fine, you should now see something like:
+Si tout fonctionne bien, vous devriez recevoir ce message suivant:
 
 ![Local Network Controller - Network Started](./img/network_started.PNG)
 
+Comme l'explique le message, il faut garder l'outil en marche pour garder le réseau de test vivant sur cette machine. 
 
-As the message in the screenshot explains, we need to keep this tool running to keep the test network alive on this machine. That brings us to the end of this Example. If you're reading this, we hope you've got a test net running on your machine, so gratz!!
-
-
+C'est maintenant la fin de cette exemple, si vous lisez ceci nous espérons que vous avez réussis à lancer le réseau de test sur votre machine, bravo!
 
