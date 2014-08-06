@@ -22,7 +22,7 @@ You can provide custom settings where applicable for the various options in the 
 ![Local Network Controller - Vault Count](./img/vaults_count.PNG)
 
 
-Now with the default option for "Vault count" the tool sets up a network with 12 Vaults (**this process may take a few minutes**). There are 2 extra vaults (zero state nodes) that are created as part of this process which get destroyed during the bootstrap phase.
+Now with the default option for "Vault count" the tool sets up a network with 16 Vaults (**this process may take a few minutes**). There are 2 extra vaults (zero state nodes) that are created as part of this process which get destroyed during the bootstrap phase.
 
 The issue is that for a brand new (i.e. "zero state") network, the Vaults aren't able to validate who they are connecting to, since no Vault has properly registered itself onto the network.  Vault registration involves storing the Vault's public keys onto the network - clearly this can't have happened *before* the network exists!
 
@@ -30,7 +30,7 @@ To get round this, we create a bundle of keys (one per vault) before the network
 
 Once the network has started, the tool proceeds to store the public keys to the network properly, and at that stage, the network can behave normally.
 
-Each Vault needs to be connected to a minimum number of peer Vaults before it considers itself joined to the network.  For this reason the tool enforces a minimum local network size  (currently 10).
+Each Vault needs to be connected to a minimum number of peer Vaults before it considers itself joined to the network.  For this reason the tool enforces a minimum local network size  (currently 16).
 
 Provided everything runs fine, you should now see something like:
 

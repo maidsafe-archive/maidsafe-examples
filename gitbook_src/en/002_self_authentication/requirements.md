@@ -4,7 +4,7 @@
 ### API Project Libraries & local_network_controller:
 
 
-Please refer to the [Network Setup - Requirements](001_network_setup/requirements.md) to get your build environment setup for the MaidSafe Super-Project.
+Please refer to the [Network Setup - Requirements](001_network_setup/requirements.md) to get your build environment set up for the MaidSafe Super-Project.
 
 This example requires two targets to be built from the MaidSafe Super-Project.
 
@@ -21,7 +21,7 @@ Make sure to have the `local_network_controller` up and running. You should leav
 
 ### [MaidSafe-Examples](https://github.com/maidsafe/maidsafe-examples) Source Code
 
-Clone/Download the Github project to a preferred location on your machine. This project contains any code samples that the examples series will rely on in the `code` folder.
+Clone the Github project to a preferred location on your machine. This project contains any code samples that the examples series will rely on in the `code` folder.
 
 Now from somewhere outside the Examples project root we need to run:
 
