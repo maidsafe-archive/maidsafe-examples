@@ -5,17 +5,20 @@
 
 using namespace maidsafe;
 
-int main() {
+int main(int /*argc*/, char* argv[]) {
   // Note: This snippet demonstrates how to create / login to an account on the SAFE network.
   //       Please verify the testnet is currently operational via
   //       http:://visualiser.maidsafe.net:8080/testnet-status before running this snippet.
   //       If you have a local network setup, Make sure bootstrap_override.dat file exists in the
   //       current folder of the executable before running this example.
 
+  // Required for bootstrap handling
+  SetThisExecutablePath(argv);
+
   /* Modify Pin/Keyword/Password variables to create a specific account */
   
   // Random Pin with a Minimum of 1000
-  uint32_t pin(std::min(RandomUint32(), static_cast<uint32_t>(1000)));
+  uint32_t pin(std::max(RandomUint32(), static_cast<uint32_t>(1000)));
 
   // Random keyword with 20 characters
   std::string keyword(RandomAlphaNumericString(20));
@@ -33,7 +36,7 @@ int main() {
     try {
       std::cout << "Creating Account\n";
       std::future<std::unique_ptr<PrivateClient>> private_client_future{
-      PrivateClient::CreateAccount(keyword, pin, password) };
+          PrivateClient::CreateAccount(keyword, pin, password) };
 
       std::unique_ptr<PrivateClient> private_client{ private_client_future.get() };
       // Private Client is now created and ready for use
@@ -56,15 +59,14 @@ int main() {
     try {
       std::cout << "Logging into Account\n";
       std::future<std::unique_ptr<PrivateClient>> private_client_future{
-      PrivateClient::Login(keyword, pin, password) };
+          PrivateClient::Login(keyword, pin, password) };
 
       std::unique_ptr<PrivateClient> private_client{ private_client_future.get() };
       // Private Client is now ready for use
       std::cout << "Login completed successfully\n";
       private_client->Logout();
       std::cout << "Logged out of Account\n\n";
-    }
-    catch (const maidsafe_error& error) {
+    } catch (const maidsafe_error& error) {
       if (make_error_code(VaultErrors::no_such_account) == error.code()) {
         std::cout << "Sorry, No such account exists on the network\n\n";
       } else {
@@ -73,8 +75,5 @@ int main() {
     }
   }
 
-  int x;
-  std::cout << "\n\nCompleted. Hit \'Enter\' to exit.";
-  std::cin >> x;
   return 0;
 }
