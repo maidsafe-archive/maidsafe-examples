@@ -1,0 +1,8 @@
+#ifndef NETWORK_SANITY_CHECKER_CHECK_BOOTSTRAPS_CONNECTIVITY_H_
+#define NETWORK_SANITY_CHECKER_CHECK_BOOTSTRAPS_CONNECTIVITY_H_
+
+#include <fstream>
+
+void CheckBootstrapsConnectivity(std::ofstream& results_fstream);
+
+#endif  // NETWORK_SANITY_CHECKER_CHECK_BOOTSTRAPS_CONNECTIVITY_H_

@@ -4,7 +4,7 @@ else()
   cmake_minimum_required(VERSION 2.8.12.1 FATAL_ERROR)
 endif()
 
-project("authentication")
+project("network_sanity_checker")
 
 # Including maidsafe_export.cmake brings all the MaidSafe libraries into scope as CMake targets.
 find_file(MaidSafeExport NAMES maidsafe_export.cmake
@@ -20,5 +20,10 @@ if(NOT MaidSafeExport)
 endif()
 include(${MaidSafeExport})
 
-add_executable(${PROJECT_NAME} main.cc)
-target_link_libraries(${PROJECT_NAME} maidsafe_api)
+add_executable(${PROJECT_NAME}
+               main.cc
+               check_bootstraps_connectivity.h
+               check_bootstraps_connectivity.cc
+               )
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME} maidsafe_rudp)
