@@ -1,98 +1,80 @@
 #include <iostream>
 
-#include "maidsafe/common/make_unique.h"
-#include "maidsafe/common/menu.h"
-#include "maidsafe/common/log.h"
-#include "maidsafe/common/types.h"
-#include "maidsafe/passport/passport.h"
-#include "maidsafe/routing/bootstrap_file_operations.h"
-#include "maidsafe/routing/parameters.h"
-#include "maidsafe/client.h"
-#include "maidsafe/anonymous_session.h"
+#include "maidsafe.h"
+#include "maidsafe/common/utils.h"
 
-void InputKeyword(std::string& keyword, maidsafe::CLI& cli) {
-  keyword.clear(); keyword = cli.Get<std::string>("Enter Keyword");
-}
+using namespace maidsafe;
 
-void InputPin(uint32_t& pin, maidsafe::CLI& cli) {
-  pin = 0; pin = cli.Get<uint32_t>("Enter Pin");
-}
+int main() {
+  // Note: This snippet demonstrates how to create / login to an account on the SAFE network.
+  //       Please verify the testnet is currently operational via
+  //       http:://visualiser.maidsafe.net:8080/testnet-status before running this snippet.
+  //       If you have a local network setup, Make sure bootstrap_override.dat file exists in the
+  //       current folder of the executable before running this example.
 
-void InputPassword(std::string& password, maidsafe::CLI& cli) {
-  password.clear(); password = cli.Get<std::string>("Enter Password");
-}
-
-void CreateAccount(const std::string& keyword, uint32_t pin, const std::string& password) {
-  try {
-    maidsafe::authentication::UserCredentials user_credentials;
-    user_credentials.keyword =
-      maidsafe::make_unique<maidsafe::authentication::UserCredentials::Keyword>(keyword);
-    user_credentials.pin =
-      maidsafe::make_unique<maidsafe::authentication::UserCredentials::Pin>(std::to_string(pin));
-    user_credentials.password =
-      maidsafe::make_unique<maidsafe::authentication::UserCredentials::Password>(password);
+  /* Modify Pin/Keyword/Password variables to create a specific account */
   
-    maidsafe::routing::Parameters::append_local_live_port_endpoint = true;
-    maidsafe::routing::BootstrapContacts bootstrap_contacts;
+  // Random Pin with a Minimum of 1000
+  uint32_t pin(std::min(RandomUint32(), static_cast<uint32_t>(1000)));
 
-    auto maid_and_signer(maidsafe::passport::CreateMaidAndSigner());
+  // Random keyword with 20 characters
+  std::string keyword(RandomAlphaNumericString(20));
 
-    maidsafe::Client client(maid_and_signer, bootstrap_contacts);
-    maidsafe::AnonymousSession session(maid_and_signer);
-    maidsafe::SessionHandler<maidsafe::AnonymousSession>
-      session_handler(std::move(session), client, std::move(user_credentials));
+  // Random password with 25 characters
+  std::string password(RandomAlphaNumericString(25));
+
+  std::cout << "Creating account with:\n" <<
+               "Pin: " << pin << '\n' <<
+               "Keyword: " << keyword << '\n' <<
+               "Password: " << password << "\n\n";
+  {
+    // Scope for Account creation
+
+    try {
+      std::cout << "Creating Account\n";
+      std::future<std::unique_ptr<PrivateClient>> private_client_future{
+      PrivateClient::CreateAccount(keyword, pin, password) };
+
+      std::unique_ptr<PrivateClient> private_client{ private_client_future.get() };
+      // Private Client is now created and ready for use
+      std::cout << "Account created successfully\n";
+      private_client->Logout();
+      std::cout << "Logged out of Account\n\n";
+
+    } catch (const maidsafe_error& error) {
+      if (make_error_code(VaultErrors::account_already_exists) == error.code()) {
+        std::cout << "Sorry, Account with given credentials already exist\n\n";
+      } else {
+        std::cout << "Error on Create Account :" << boost::diagnostic_information(error) << "\n\n";
+      }
+    }
   }
-  catch (std::exception& e) {
-    LOG(kError) << "Error on Account Creation: " << boost::diagnostic_information(e);
+
+  {
+    // Scope for Login
+
+    try {
+      std::cout << "Logging into Account\n";
+      std::future<std::unique_ptr<PrivateClient>> private_client_future{
+      PrivateClient::Login(keyword, pin, password) };
+
+      std::unique_ptr<PrivateClient> private_client{ private_client_future.get() };
+      // Private Client is now ready for use
+      std::cout << "Login completed successfully\n";
+      private_client->Logout();
+      std::cout << "Logged out of Account\n\n";
+    }
+    catch (const maidsafe_error& error) {
+      if (make_error_code(VaultErrors::no_such_account) == error.code()) {
+        std::cout << "Sorry, No such account exists on the network\n\n";
+      } else {
+        std::cout << "Error on Login :" << boost::diagnostic_information(error) << "\n\n";
+      }
+    }
   }
-}
 
-void Login(const std::string& keyword, uint32_t pin, const std::string& password) {
-  try {
-    maidsafe::authentication::UserCredentials user_credentials;
-    user_credentials.keyword =
-      maidsafe::make_unique<maidsafe::authentication::UserCredentials::Keyword>(keyword);
-    user_credentials.pin =
-      maidsafe::make_unique<maidsafe::authentication::UserCredentials::Pin>(std::to_string(pin));
-    user_credentials.password =
-      maidsafe::make_unique<maidsafe::authentication::UserCredentials::Password>(password);
-
-    maidsafe::routing::Parameters::append_local_live_port_endpoint = true;
-    maidsafe::routing::BootstrapContacts bootstrap_contacts;
-
-    maidsafe::SessionHandler<maidsafe::AnonymousSession> session_handler(bootstrap_contacts);
-    session_handler.Login(std::move(user_credentials));
-    maidsafe::Client client(session_handler.session().passport->GetMaid(), bootstrap_contacts);
-  }
-  catch (std::exception& e) {
-    LOG(kError) << "Error on Login: " << boost::diagnostic_information(e);
-  }
-}
-
-int main(int argc, char* argv[]) {
-  maidsafe::log::Logging::Instance().Initialise(argc, argv);
-
-  std::string keyword, password;
-  uint32_t pin(0);
-  maidsafe::CLI cli;
-
-  maidsafe::Menu menu("Authentication Menu");
-
-  maidsafe::MenuItem* create_account(menu.AddItem("Create a New Account"));
-    
-  create_account->AddChildItem("Input a Keyword", [&]{ InputKeyword(keyword, cli); });
-  create_account->AddChildItem("Input a Pin", [&]{ InputPin(pin, cli); });
-  create_account->AddChildItem("Input a Password", [&]{ InputPassword(password, cli); });
-  create_account->AddChildItem("Create Account", [&]{ CreateAccount(keyword, pin, password); });
-
-  maidsafe::MenuItem* login(menu.AddItem("Login to Existing Account"));
-    
-  login->AddChildItem("Input a Keyword", [&]{ InputKeyword(keyword, cli); });
-  login->AddChildItem("Input a Pin", [&]{ InputPin(pin, cli); });
-  login->AddChildItem("Input a Password", [&]{ InputPassword(password, cli); });
-  login->AddChildItem("Login", [&]{ Login(keyword, pin, password); });
-
-  menu.Run();
-
+  int x;
+  std::cout << "\n\nCompleted. Hit \'Enter\' to exit.";
+  std::cin >> x;
   return 0;
 }
