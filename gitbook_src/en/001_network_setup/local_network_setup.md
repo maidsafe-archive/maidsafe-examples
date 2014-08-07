@@ -2,7 +2,7 @@
 
 So now that you have the build environment set up on your machine, the target we require for this example is '**local_network_controller**'. This serves as a client to connect to the vault manager and start the network with a bunch of vaults which we can then connect to in future examples.
 
-* Go ahead and build the target 'local_network_controller'
+* Go ahead and build the target `local_network_controller`
 * Run the tool and you should see something like:
 
 > Tip: If you want to see detailed logging info, you can pass `--log_* V` when invoking the tool.  For full logging options, see [this wiki page](https://github.com/maidsafe/MaidSafe/wiki/Logging-Options#invoking-logging-arguments).
@@ -12,12 +12,6 @@ So now that you have the build environment set up on your machine, the target we
 For this example we are going to go with option "1". Hit "1" and Enter. This lets us start a new network on this machine.
 
 You can provide custom settings where applicable for the various options in the tool such as "Path to vault Executable" or "Number of Vaults to run the network with". Following the default options, you should see the tool function such as
-
-![Local Network Controller - Vault Manager Root Path](./img/vault_manager_root.PNG)
-
-![Local Network Controller - Vault App Path](./img/vault_executable.PNG)
-
-![Local Network Controller - Listening port](./img/listening_port.PNG)
 
 ![Local Network Controller - Vault Count](./img/vaults_count.PNG)
 
