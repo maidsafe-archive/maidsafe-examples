@@ -15,6 +15,16 @@ function(ms_underscores_to_camel_case VarIn VarOut)
   set(${VarOut} ${CamelCase} PARENT_SCOPE)
 endfunction()
 
+function(apply_target_properties Target)
+  if(ARGV1)
+    set(Folder "${ARGV1}")
+  else()
+    set(Folder "Examples")
+  endif()
+  ms_underscores_to_camel_case(${Target} CamelCaseTargetName)
+  set_target_properties(${Target} PROPERTIES PROJECT_LABEL ${CamelCaseTargetName} FOLDER "${Folder}")
+endfunction()
+
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project("maidsafe-examples")
