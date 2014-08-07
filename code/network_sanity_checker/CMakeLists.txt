@@ -25,5 +25,7 @@ add_executable(${PROJECT_NAME}
                check_bootstraps_connectivity.h
                check_bootstraps_connectivity.cc
                )
+ms_underscores_to_camel_case(${PROJECT_NAME} AppName)
+set_target_properties(${PROJECT_NAME} PROPERTIES PROJECT_LABEL ${AppName} FOLDER "Tools")
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR})
 target_link_libraries(${PROJECT_NAME} maidsafe_rudp)

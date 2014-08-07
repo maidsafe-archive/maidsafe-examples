@@ -21,4 +21,6 @@ endif()
 include(${MaidSafeExport})
 
 add_executable(${PROJECT_NAME} main.cc)
+ms_underscores_to_camel_case(${PROJECT_NAME} AppName)
+set_target_properties(${PROJECT_NAME} PROPERTIES PROJECT_LABEL ${AppName} FOLDER "Examples")
 target_link_libraries(${PROJECT_NAME} maidsafe_api)

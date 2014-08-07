@@ -4,6 +4,19 @@ else()
   cmake_minimum_required(VERSION 2.8.12.1 FATAL_ERROR)
 endif()
 
+function(ms_underscores_to_camel_case VarIn VarOut)
+  string(REPLACE "_" ";" Pieces ${VarIn})
+  foreach(Part ${Pieces})
+    string(SUBSTRING ${Part} 0 1 Initial)
+    string(SUBSTRING ${Part} 1 -1 Part)
+    string(TOUPPER ${Initial} Initial)
+    set(CamelCase ${CamelCase}${Initial}${Part})
+  endforeach()
+  set(${VarOut} ${CamelCase} PARENT_SCOPE)
+endfunction()
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
 project("maidsafe-examples")
 
 file(GLOB SubDirs "${CMAKE_SOURCE_DIR}/*")
