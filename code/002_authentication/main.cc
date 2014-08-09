@@ -45,7 +45,7 @@ int main(int /*argc*/, char* argv[]) {
       std::cout << "Logged out of Account\n\n";
 
     } catch (const maidsafe_error& error) {
-      if (make_error_code(VaultErrors::account_already_exists) == error.code()) {
+      if (make_error_code(VaultErrors::data_already_exists) == error.code()) {
         std::cout << "Sorry, Account with given credentials already exist\n\n";
       } else {
         std::cout << "Error on Create Account :" << boost::diagnostic_information(error) << "\n\n";
