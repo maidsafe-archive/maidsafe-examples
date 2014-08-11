@@ -23,15 +23,11 @@ module.exports = function (grunt) {
         }
     });
 
-    if (/^win/.test(process.platform)) {
-      console.log('Feature disabled on Windows');
-    } else {
-      grunt.registerTask('publish', [
-          'gitbook',
-          'gh-pages',
-          'clean'
-      ]);
-    }
+    grunt.registerTask('publish', [
+        'gitbook',
+        'gh-pages',
+        'clean'
+    ]);
 
     grunt.registerTask('default', 'gitbook');
 };
