@@ -2,7 +2,7 @@
 
 So now that you have the build environment set up on your machine, the target we require for this example is '**local_network_controller**'. This serves as a client to connect to the vault manager and start the network with a bunch of vaults which we can then connect to in future examples.
 
-* Go ahead and build the target 'local_network_controller'
+* Go ahead and build the target 'local_network_controller'. Assuming you built targets in `$HOME/MaidSafe/build_maidsafe`, you would run `make local_network_controller` in the same directory (adjust as needed for your own environment).
 * Run the tool and you should see something like:
 
 > Tip: If you want to see detailed logging info, you can pass `--log_* V` when invoking the tool.  For full logging options, see [this wiki page](https://github.com/maidsafe/MaidSafe/wiki/Logging-Options#invoking-logging-arguments).
