@@ -32,7 +32,7 @@
 
 
         
-    <div class="book" data-github="maidsafe/maidsafe-examples" data-level="1.2" data-basepath=".." data-revision="1406567962850">
+    <div class="book" data-github="maidsafe/maidsafe-examples" data-level="1.2" data-basepath=".." data-revision="1408448365536">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -235,12 +235,20 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_3">
+                    <section class="normal" id="section-gitbook_2">
                     
                         <h1 id="local-network-setup">Local Network Setup</h1>
 <p>So now that you have the build environment set up on your machine, the target we require for this example is &#39;<strong>local_network_controller</strong>&#39;. This serves as a client to connect to the vault manager and start the network with a bunch of vaults which we can then connect to in future examples.</p>
 <ul>
-<li>Go ahead and build the target &#39;local_network_controller&#39;</li>
+<li><p>Build the target <code>local_network_controller</code></p>
+<h4 id="unix-makefiles-">Unix Makefiles:</h4>
+<p>From your MaidSafe Super project&#39;s build folder, run</p>
+<pre><code>make local_network_controller
+</code></pre><h4 id="msvc-xcode-">MSVC / XCode:</h4>
+<p>You can build the target <code>local_network_controller</code> from the MaidSafe Super project&#39;s solution/xcodeproj.</p>
+</li>
+</ul>
+<ul>
 <li>Run the tool and you should see something like:</li>
 </ul>
 <blockquote>
