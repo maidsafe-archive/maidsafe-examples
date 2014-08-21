@@ -25,7 +25,7 @@ module.exports = function (grunt) {
         'string-replace': {
           dist: {
             files: {
-              '_book/gitbook/style.css': '_book/gitbook/style.css'
+              '_book/': '_book/**/style.css'
             },
             options: {
               replacements: [{
