@@ -9,7 +9,7 @@
     },
     "gitbook-plugin-ga": {
       "version": "0.1.0",
-      "from": "gitbook-plugin-ga@latest",
+      "from": "https://registry.npmjs.org/gitbook-plugin-ga/-/gitbook-plugin-ga-0.1.0.tgz",
       "resolved": "https://registry.npmjs.org/gitbook-plugin-ga/-/gitbook-plugin-ga-0.1.0.tgz"
     },
     "grunt": {
@@ -306,9 +306,9 @@
       "resolved": "https://registry.npmjs.org/grunt-gitbook/-/grunt-gitbook-0.5.6.tgz",
       "dependencies": {
         "gitbook": {
-          "version": "0.7.1",
-          "from": "gitbook@git://github.com/GitbookIO/gitbook#74f95f4d0d404e6df533d056a5acab60623407c8",
-          "resolved": "git://github.com/GitbookIO/gitbook#74f95f4d0d404e6df533d056a5acab60623407c8",
+          "version": "1.0.3",
+          "from": "gitbook@latest",
+          "resolved": "https://registry.npmjs.org/gitbook/-/gitbook-1.0.3.tgz",
           "dependencies": {
             "q": {
               "version": "1.0.1",
@@ -321,14 +321,14 @@
               "resolved": "https://registry.npmjs.org/lodash/-/lodash-2.4.1.tgz"
             },
             "kramed": {
-              "version": "0.4.0",
-              "from": "kramed@0.4.0",
-              "resolved": "https://registry.npmjs.org/kramed/-/kramed-0.4.0.tgz"
+              "version": "0.4.2",
+              "from": "kramed@0.4.2",
+              "resolved": "https://registry.npmjs.org/kramed/-/kramed-0.4.2.tgz"
             },
-            "marked-text-renderer": {
-              "version": "0.1.0",
-              "from": "marked-text-renderer@0.1.0",
-              "resolved": "https://registry.npmjs.org/marked-text-renderer/-/marked-text-renderer-0.1.0.tgz"
+            "kramed-text-renderer": {
+              "version": "0.2.1",
+              "from": "kramed-text-renderer@0.2.1",
+              "resolved": "https://registry.npmjs.org/kramed-text-renderer/-/kramed-text-renderer-0.2.1.tgz"
             },
             "lunr": {
               "version": "0.5.2",
@@ -406,9 +406,9 @@
               "resolved": "https://registry.npmjs.org/send/-/send-0.2.0.tgz",
               "dependencies": {
                 "debug": {
-                  "version": "1.0.4",
+                  "version": "2.0.0",
                   "from": "debug@*",
-                  "resolved": "https://registry.npmjs.org/debug/-/debug-1.0.4.tgz",
+                  "resolved": "https://registry.npmjs.org/debug/-/debug-2.0.0.tgz",
                   "dependencies": {
                     "ms": {
                       "version": "0.6.2",
@@ -423,14 +423,14 @@
                   "resolved": "https://registry.npmjs.org/mime/-/mime-1.2.11.tgz"
                 },
                 "fresh": {
-                  "version": "0.2.2",
+                  "version": "0.2.4",
                   "from": "fresh@~0.2.1",
-                  "resolved": "https://registry.npmjs.org/fresh/-/fresh-0.2.2.tgz"
+                  "resolved": "https://registry.npmjs.org/fresh/-/fresh-0.2.4.tgz"
                 },
                 "range-parser": {
-                  "version": "1.0.0",
+                  "version": "1.0.2",
                   "from": "range-parser@~1.0.0",
-                  "resolved": "https://registry.npmjs.org/range-parser/-/range-parser-1.0.0.tgz"
+                  "resolved": "https://registry.npmjs.org/range-parser/-/range-parser-1.0.2.tgz"
                 }
               }
             },
@@ -532,9 +532,9 @@
               }
             },
             "highlight.js": {
-              "version": "8.0.0",
-              "from": "highlight.js@8.0.0",
-              "resolved": "https://registry.npmjs.org/highlight.js/-/highlight.js-8.0.0.tgz"
+              "version": "8.2.0",
+              "from": "highlight.js@8.2.0",
+              "resolved": "https://registry.npmjs.org/highlight.js/-/highlight.js-8.2.0.tgz"
             },
             "tmp": {
               "version": "0.0.23",
@@ -651,14 +651,24 @@
               "resolved": "https://registry.npmjs.org/gitbook-plugin/-/gitbook-plugin-0.0.2.tgz"
             },
             "gitbook-plugin-mathjax": {
-              "version": "0.0.4",
-              "from": "gitbook-plugin-mathjax@0.0.4",
-              "resolved": "https://registry.npmjs.org/gitbook-plugin-mathjax/-/gitbook-plugin-mathjax-0.0.4.tgz"
+              "version": "0.0.6",
+              "from": "gitbook-plugin-mathjax@0.0.6",
+              "resolved": "https://registry.npmjs.org/gitbook-plugin-mathjax/-/gitbook-plugin-mathjax-0.0.6.tgz"
             },
             "gitbook-plugin-livereload": {
               "version": "0.0.1",
               "from": "gitbook-plugin-livereload@0.0.1",
               "resolved": "https://registry.npmjs.org/gitbook-plugin-livereload/-/gitbook-plugin-livereload-0.0.1.tgz"
+            },
+            "gitbook-plugin-exercises": {
+              "version": "1.0.0",
+              "from": "gitbook-plugin-exercises@1.0.0",
+              "resolved": "https://registry.npmjs.org/gitbook-plugin-exercises/-/gitbook-plugin-exercises-1.0.0.tgz"
+            },
+            "gitbook-plugin-quizzes": {
+              "version": "1.0.0",
+              "from": "gitbook-plugin-quizzes@1.0.0",
+              "resolved": "https://registry.npmjs.org/gitbook-plugin-quizzes/-/gitbook-plugin-quizzes-1.0.0.tgz"
             }
           }
         },
@@ -803,7 +813,7 @@
             },
             "rimraf": {
               "version": "2.2.8",
-              "from": "rimraf@~2.2.8",
+              "from": "rimraf@~2.2.1",
               "resolved": "https://registry.npmjs.org/rimraf/-/rimraf-2.2.8.tgz"
             },
             "lodash": {
@@ -922,9 +932,9 @@
                   "resolved": "https://registry.npmjs.org/diff/-/diff-1.0.7.tgz"
                 },
                 "debug": {
-                  "version": "1.0.4",
+                  "version": "2.0.0",
                   "from": "debug@*",
-                  "resolved": "https://registry.npmjs.org/debug/-/debug-1.0.4.tgz",
+                  "resolved": "https://registry.npmjs.org/debug/-/debug-2.0.0.tgz",
                   "dependencies": {
                     "ms": {
                       "version": "0.6.2",
@@ -975,6 +985,18 @@
               }
             }
           }
+        }
+      }
+    },
+    "grunt-string-replace": {
+      "version": "0.2.7",
+      "from": "grunt-string-replace@latest",
+      "resolved": "https://registry.npmjs.org/grunt-string-replace/-/grunt-string-replace-0.2.7.tgz",
+      "dependencies": {
+        "async": {
+          "version": "0.2.10",
+          "from": "async@~0.2.9",
+          "resolved": "https://registry.npmjs.org/async/-/async-0.2.10.tgz"
         }
       }
     }
