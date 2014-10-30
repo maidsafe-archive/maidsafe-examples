@@ -1,0 +1,34 @@
+<RCC>
+  <qresource prefix="/">
+    <file>resources/fonts/OpenSans-Light.ttf</file>
+    <file>resources/fonts/OpenSans-Regular.ttf</file>
+    <file>resources/fonts/OpenSans-Semibold.ttf</file>
+  </qresource>
+  <qresource prefix="/">
+    <file>resources/icons/checkbox_glyph.svg</file>
+    <file>resources/icons/status_error_glyph.svg</file>
+    <file>resources/icons/tray_icon_osx.png</file>
+    <file>resources/icons/tray_icon_win.png</file>
+  </qresource>
+  <qresource prefix="/">
+    <file>resources/images/app_header.svg</file>
+  </qresource>
+  <qresource prefix="/">
+    <file>resources/js/brushes.js</file>
+    <file>resources/js/properties.js</file>
+  </qresource>
+  <qresource prefix="/">
+    <file>resources/styles/BlueButton.qml</file>
+    <file>resources/styles/CustomCheckBox.qml</file>
+    <file>resources/styles/CustomTextField.qml</file>
+    <file>resources/styles/CustomWindow.qml</file>
+    <file>resources/styles/GrayButton.qml</file>
+    <file>resources/styles/HeaderLabel.qml</file>
+    <file>resources/styles/StatusBar.qml</file>
+  </qresource>
+  <qresource prefix="/">
+    <file>views/CreateAccount.qml</file>
+    <file>views/Login.qml</file>
+    <file>views/OpenDrive.qml</file>
+  </qresource>
+</RCC>
