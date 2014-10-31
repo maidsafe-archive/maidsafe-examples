@@ -26,6 +26,8 @@ namespace safedrive {
 
 const QString kMainController("mainController");
 const QString kAPIModel("apiModel");
+const QString kTestnetStatusMonitor("testnetStatusMonitor");
+
 
 }  // namespace safedrive
 

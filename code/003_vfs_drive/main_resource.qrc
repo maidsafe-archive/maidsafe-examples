@@ -6,6 +6,7 @@
   </qresource>
   <qresource prefix="/">
     <file>resources/icons/checkbox_glyph.svg</file>
+    <file>resources/icons/not_connected.svg</file>
     <file>resources/icons/status_error_glyph.svg</file>
     <file>resources/icons/tray_icon_osx.png</file>
     <file>resources/icons/tray_icon_win.png</file>
@@ -30,5 +31,6 @@
     <file>views/CreateAccount.qml</file>
     <file>views/Login.qml</file>
     <file>views/OpenDrive.qml</file>
+    <file>views/TestnetStatus.qml</file>
   </qresource>
 </RCC>

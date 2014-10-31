@@ -27,12 +27,10 @@
 #include "helpers/qt_pop_headers.h"
 
 #include "models/api_model.h"
+#include "models/testnet_status_monitor.h"
 #include "controllers/system_tray.h"
 
 namespace safedrive {
-
-// class APIModel;
-// class SystemTray;
 
 class MainController : public QObject {
   Q_OBJECT
@@ -41,17 +39,18 @@ class MainController : public QObject {
   enum Views {
     kLogin,
     kCreateAccount,
-    kOpenDrive
+    kOpenDrive,
+    kTestnetStatus
   };
 
   explicit MainController(QObject* parent = 0);
   ~MainController() {}
-  Q_INVOKABLE void CreateAccount(const QString& pin,
+  Q_INVOKABLE void createAccount(const QString& pin,
                                  const QString& keyword,
                                  const QString& password);
-  Q_INVOKABLE void Login(const QString& pin, const QString& keyword, const QString& password);
-  Q_INVOKABLE void MountDrive();
-  Q_INVOKABLE void UnmountDrive();
+  Q_INVOKABLE void login(const QString& pin, const QString& keyword, const QString& password);
+  Q_INVOKABLE void mountDrive();
+  Q_INVOKABLE void unmountDrive();
 
  protected:
   bool eventFilter(QObject* object, QEvent* event);
@@ -73,6 +72,7 @@ class MainController : public QObject {
   QQmlApplicationEngine* main_engine_;
   QMap<Views, QQuickWindow*> views_;
   std::unique_ptr<APIModel> api_model_;
+  std::unique_ptr<TestnetStatusMonitor> testnet_status_monitor_;
   std::unique_ptr<SystemTray> system_tray_;
   QFutureWatcher<bool> future_watcher_;
 };

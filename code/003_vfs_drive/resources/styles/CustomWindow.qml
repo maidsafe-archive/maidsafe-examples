@@ -18,7 +18,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.0
-import SafeDrive 1.0
+import SAFEdrive 1.0
 import "../js/brushes.js" as DefaultBrushes
 import "../js/properties.js" as DefaultProperties
 
@@ -33,7 +33,7 @@ ApplicationWindow {
   maximumWidth: DefaultProperties.normalWindowWidth
   minimumHeight: DefaultProperties.normalWindowHeight
   minimumWidth: DefaultProperties.normalWindowWidth
-  title: "SAFE Drive"
+  title: "SAFEdrive"
   width: DefaultProperties.normalWindowWidth
 
   Item {

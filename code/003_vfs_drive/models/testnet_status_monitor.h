@@ -16,14 +16,41 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import SAFEdrive 1.0
-import "../resources/styles"
+#ifndef SAFEDRIVE_MODELS_TESTNET_STATUS_MONITOR_H_
+#define SAFEDRIVE_MODELS_TESTNET_STATUS_MONITOR_H_
 
-CustomWindow {
-  content: Item {
-    id: rootItem
-    anchors.fill: parent
-  }
-}
+// std
+#include <memory>
+#include <string>
+
+#include "helpers/qt_push_headers.h"
+#include "helpers/qt_pop_headers.h"
+
+namespace safedrive {
+
+class TestnetStatusMonitor : public QObject {
+  Q_OBJECT
+
+ public:
+  explicit TestnetStatusMonitor(QObject* parent = 0);
+
+  Q_INVOKABLE void isTestnetAvailable();
+
+ signals: // NOLINT - Viv
+  void testnetStatusReceived(bool isAvailable);
+
+ private slots: // NOLINT - Viv
+  void NetworkReplyReceived(QNetworkReply* reply);
+
+ private:
+   TestnetStatusMonitor(const TestnetStatusMonitor&);
+   TestnetStatusMonitor& operator=(const TestnetStatusMonitor&);
+
+   std::unique_ptr<QNetworkAccessManager> network_access_manager_;
+
+};
+
+}  // namespace safedrive
+
+#endif  // SAFEDRIVE_MODELS_TESTNET_STATUS_MONITOR_H_
+

@@ -33,14 +33,15 @@ MainController::MainController(QObject* parent)
       main_engine_(),
       views_(),
       api_model_(),
+      testnet_status_monitor_(),
       system_tray_(new SystemTray),
       future_watcher_() {
-  qmlRegisterType<APIModel>("SafeDrive", 1, 0, "APIModel");
+  qmlRegisterType<APIModel>("SAFEdrive", 1, 0, "APIModel");
   installEventFilter(this);
   QTimer::singleShot(0, this, SLOT(EventLoopStarted()));
 }
 
-void MainController::CreateAccount(const QString& pin,
+void MainController::createAccount(const QString& pin,
                                    const QString& keyword,
                                    const QString& password) {
   connect(&future_watcher_, SIGNAL(finished()), this, SLOT(CreateAccountCompleted()));
@@ -48,17 +49,17 @@ void MainController::CreateAccount(const QString& pin,
     QtConcurrent::run(api_model_.get(), &APIModel::CreateAccount, pin, keyword, password));
 }
 
-void MainController::Login(const QString& pin, const QString& keyword, const QString& password) {
+void MainController::login(const QString& pin, const QString& keyword, const QString& password) {
   connect(&future_watcher_, SIGNAL(finished()), this, SLOT(LoginCompleted()));
   future_watcher_.setFuture(
     QtConcurrent::run(api_model_.get(), &APIModel::Login, pin, keyword, password));
 }
 
-void MainController::MountDrive() {
+void MainController::mountDrive() {
   QtConcurrent::run(api_model_.get(), &APIModel::MountDrive);
 }
 
-void MainController::UnmountDrive() {
+void MainController::unmountDrive() {
   QtConcurrent::run(api_model_.get(), &APIModel::UnmountDrive);
 }
 
@@ -72,16 +73,18 @@ bool MainController::eventFilter(QObject* object, QEvent* event) {
 
 void MainController::EventLoopStarted() {
   api_model_.reset(new APIModel);
+  testnet_status_monitor_.reset(new TestnetStatusMonitor);
   main_engine_ = new QQmlApplicationEngine();
   main_engine_->addImportPath(qApp->applicationDirPath() + "/qml");
   main_engine_->addPluginPath(qApp->applicationDirPath() + "/plugins");
   auto root_context_ = main_engine_->rootContext();
   root_context_->setContextProperty(kMainController, this);
   root_context_->setContextProperty(kAPIModel, api_model_.get());
+  root_context_->setContextProperty(kTestnetStatusMonitor, testnet_status_monitor_.get());
   LoadViews();
   InitSignals();
 
-  QQuickWindow* current_view = views_[kLogin];
+  QQuickWindow* current_view = views_[kTestnetStatus];
   current_view->show();
   CenterToScreen(current_view);
   system_tray_->show();
@@ -89,7 +92,7 @@ void MainController::EventLoopStarted() {
 
 void MainController::UnhandledException() {
   CustomMessageBox::Show(
-      tr("SAFE-Drive has encountered an unexpected error. Please relaunch the app"),
+      tr("SAFEdrive has encountered an unexpected error. Please relaunch the app"),
       QMessageBox::Critical);
   qApp->quit();
 }
@@ -119,7 +122,7 @@ void MainController::OpenDrive() {
 }
 
 void MainController::LoadViews() {
-  int view_count(3);
+  int view_count(4);
 
   for (int i = 0; i < view_count; ++i) {
     Views view_enum;
@@ -136,6 +139,10 @@ void MainController::LoadViews() {
       case 2:
         view_enum = kOpenDrive;
         view_name = "OpenDrive";
+        break;
+      case 3:
+        view_enum = kTestnetStatus;
+        view_name = "TestnetStatus";
         break;
       default:
         throw new std::exception();

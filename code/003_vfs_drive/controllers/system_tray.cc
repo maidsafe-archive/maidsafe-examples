@@ -33,7 +33,7 @@ SystemTray::SystemTray()
   setIcon(QIcon(":/resources/icons/tray_icon_osx.png"));
 #endif
 
-  setToolTip("SAFEDrive");
+  setToolTip("SAFEdrive");
 
   open_drive_ = menu_->addAction(tr("Open Drive"), this, SIGNAL(OpenDriveRequested()));
   open_drive_->setVisible(false);

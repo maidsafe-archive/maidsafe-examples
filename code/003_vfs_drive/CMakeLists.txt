@@ -39,6 +39,7 @@ set(Qt5RequiredLibs
       Qt5Network
       Qt5Qml
       Qt5Quick
+      Qt5Script
       Qt5Svg
       Qt5Widgets)
 include(maidsafe_find_qt5)

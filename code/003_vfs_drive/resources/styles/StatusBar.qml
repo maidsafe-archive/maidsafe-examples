@@ -87,7 +87,7 @@ Item {
         height: progressStatus.indicatorRadius * 2
         opacity: 0.5
         radius: progressStatus.indicatorRadius
-        width: progressStatus.indicatorRadius * 2 
+        width: progressStatus.indicatorRadius * 2
       }
       Rectangle {
         id: indicatorThree
@@ -159,7 +159,8 @@ Item {
     errorStatus.visible = true
   }
 
-  function showProgressStatus() {
+  function showProgressStatus(indicatorRadius) {
+    progressStatus.indicatorRadius = indicatorRadius ? indicatorRadius : 3;
     clearStatusInfo()
     progressStatus.isAnimationRunning = true;
     progressStatus.visible = true

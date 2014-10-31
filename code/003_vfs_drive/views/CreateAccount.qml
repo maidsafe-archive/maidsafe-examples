@@ -18,7 +18,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.0
-import SafeDrive 1.0
+import SAFEdrive 1.0
 import "../resources/styles"
 import "../resources/js/brushes.js" as DefaultBrushes
 

@@ -24,7 +24,7 @@ void CustomMessageBox::Show(const QString& message, QMessageBox::Icon icon) {
   QMessageBox message_box;
   message_box.hide();
   message_box.setIcon(icon);
-  message_box.setWindowTitle("SAFEDrive");
+  message_box.setWindowTitle("SAFEdrive");
   message_box.setText(message);
   message_box.exec();
 }

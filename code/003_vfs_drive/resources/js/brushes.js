@@ -30,7 +30,7 @@ var darkerBlue = "#1D5086"
 var disabledGray = "#DADAD9"
 var lightGray = "#ECECEC"
 var darkerGray = "#B2B2B1"
-var labelGray = "#6F6E6E"
+var labelGray = "#6F6F6E"
 var borderGray = "#9D9C9C"
 var playerTimeLineGray = "#4D4D4D"
 

@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
   application.addLibraryPath(qApp->applicationDirPath() + "/plugins");
   application.setOrganizationDomain("http://www.maidsafe.net");
   application.setOrganizationName("MaidSafe.net Ltd.");
-  application.setApplicationName("SAFEDrive");
+  application.setApplicationName("SAFEdrive");
 
   try {
     safedrive::MainController main_controller;

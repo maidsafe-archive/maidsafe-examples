@@ -16,47 +16,35 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#include "controllers/application.h"
-
-#include "controllers/main_controller.h"
+#include "models/testnet_status_monitor.h"
+#include <iostream>
 
 namespace safedrive {
 
-ExceptionEvent::ExceptionEvent(const QString& exception_message, Type type)
-    : QEvent(type),
-      exception_message_(exception_message) {}
-
-QString ExceptionEvent::ExceptionMessage() {
-  return exception_message_;
+TestnetStatusMonitor::TestnetStatusMonitor(QObject* parent)
+  : QObject(parent),
+    network_access_manager_(new QNetworkAccessManager(this)) {
+  connect(network_access_manager_.get(), SIGNAL(finished(QNetworkReply*)),             // NOLINT - Viv
+          this,                          SLOT(NetworkReplyReceived(QNetworkReply*)));  // NOLINT - Viv
 }
 
-Application::Application(int& argc, char** argv)
-    : QApplication(argc, argv),
-      handler_object_(),
-      shared_memory_() {}
+void TestnetStatusMonitor::isTestnetAvailable() {
+  QUrl url("http://visualiser.maidsafe.net:8080/backend/testnetStatus");
+  network_access_manager_->get(QNetworkRequest(url));
+}
 
-bool Application::notify(QObject* receiver, QEvent* event) {
-  try {
-    return QApplication::notify(receiver, event);
-  } catch(...) {
-    if (handler_object_) {
-      QApplication::instance()->postEvent(&(*handler_object_),
-                                          new ExceptionEvent(tr("Unknown Exception")));
-    } else {
-      QApplication::quit();
-    }
+void TestnetStatusMonitor::NetworkReplyReceived(QNetworkReply* reply) {
+  if (reply->error() != QNetworkReply::NoError) {
+    emit testnetStatusReceived(false);
+    return;
   }
-  return false;
-}
 
-void Application::SetErrorHandler(boost::optional<MainController&> handler_object) {
-  if (handler_object)
-    handler_object_ = handler_object;
-}
-
-bool Application::IsUniqueInstance() {
-  shared_memory_.setKey("SAFEdrive");
-  return shared_memory_.create(1);
+  QString data = static_cast<QString>(reply->readAll());
+  std::string datar(data.toStdString());
+  QScriptEngine engine;
+  QScriptValue is_available = engine.evaluate("(" + data + ")").property("isReady");
+  emit testnetStatusReceived(is_available.toBool());
+  delete reply;
 }
 
 }  // namespace safedrive
