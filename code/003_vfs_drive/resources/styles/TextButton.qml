@@ -26,34 +26,16 @@ Button {
     background: Rectangle {
       antialiasing: true
       border {
-        color: DefaultBrushes.focusBlack
-        width: control.activeFocus ? 1 : 0
+        color: DefaultBrushes.transparent
+        width: 0
       }
-      color: {
-        if (!control.enabled) {
-          DefaultBrushes.disabledGray
-        } else if (control.pressed) {
-          DefaultBrushes.borderGray
-        } else if (control.hovered) {
-          DefaultBrushes.lightGray
-        } else {
-          DefaultBrushes.disabledGray
-        }
-      }
+      color: DefaultBrushes.transparent
       implicitHeight: 30
       implicitWidth: 80
     }
     label: Label {
       anchors.fill: parent
-      color: {
-        if (!control.enabled || control.pressed) {
-          DefaultBrushes.white
-        } else if (control.hovered) {
-          DefaultBrushes.focusBlack
-        } else {
-          DefaultBrushes.labelGray
-        }
-      }
+      color: control.enabled && !control.pressed && control.hovered ? DefaultBrushes.focusBlack : DefaultBrushes.labelGray
       font {
         family: "Arial"
         pixelSize: 14

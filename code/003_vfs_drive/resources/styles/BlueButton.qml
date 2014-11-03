@@ -22,8 +22,6 @@ import QtQuick.Controls.Styles 1.0
 import "../js/brushes.js" as DefaultBrushes
 
 Button {
-  property bool isTutorialWindow: false
-
   style: ButtonStyle {
     background: Rectangle {
       antialiasing: true
@@ -43,7 +41,7 @@ Button {
         }
       }
       implicitHeight: 30
-      implicitWidth: isTutorialWindow ? 100 : 80
+      implicitWidth: 80
     }
     label: Label {
       anchors.fill: parent

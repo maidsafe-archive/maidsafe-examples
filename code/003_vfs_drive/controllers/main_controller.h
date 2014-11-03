@@ -51,6 +51,8 @@ class MainController : public QObject {
   Q_INVOKABLE void login(const QString& pin, const QString& keyword, const QString& password);
   Q_INVOKABLE void mountDrive();
   Q_INVOKABLE void unmountDrive();
+  Q_INVOKABLE void showLoginView();
+  Q_INVOKABLE void showCreateAccountView();
 
  protected:
   bool eventFilter(QObject* object, QEvent* event);

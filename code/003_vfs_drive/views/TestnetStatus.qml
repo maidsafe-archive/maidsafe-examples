@@ -31,7 +31,7 @@ CustomWindow {
       onTestnetStatusReceived: {
         if (isAvailable) {
           statusBar.clearStatusInfo()
-          console.log('Open Login Page')
+          mainController.showLoginView()
         } else {
           progressStatus.visible = false;
           errorStatus.visible = true;
@@ -119,7 +119,7 @@ CustomWindow {
           rightMargin: 10
         }
         text: qsTr("Ignore")
-        onClicked: console.log('Ignore Clicked')
+        onClicked: mainController.showLoginView()
       }
     }
   }

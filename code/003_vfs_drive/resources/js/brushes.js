@@ -36,3 +36,5 @@ var playerTimeLineGray = "#4D4D4D"
 
 var darkRed = "#981919"
 var normalRed = "#E6332A"
+
+var transparent = "#00000000"

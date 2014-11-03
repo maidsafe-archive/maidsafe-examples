@@ -40,7 +40,6 @@ void TestnetStatusMonitor::NetworkReplyReceived(QNetworkReply* reply) {
   }
 
   QString data = static_cast<QString>(reply->readAll());
-  std::string datar(data.toStdString());
   QScriptEngine engine;
   QScriptValue is_available = engine.evaluate("(" + data + ")").property("isReady");
   emit testnetStatusReceived(is_available.toBool());

@@ -63,6 +63,20 @@ void MainController::unmountDrive() {
   QtConcurrent::run(api_model_.get(), &APIModel::UnmountDrive);
 }
 
+void MainController::showLoginView() {
+  views_[kTestnetStatus]->hide();
+  views_[kCreateAccount]->hide();
+  views_[kLogin]->show();
+  CenterToScreen(views_[kLogin]);
+}
+
+void MainController::showCreateAccountView() {
+  views_[kTestnetStatus]->hide();
+  views_[kLogin]->hide();
+  views_[kCreateAccount]->show();
+  CenterToScreen(views_[kCreateAccount]);
+}
+
 bool MainController::eventFilter(QObject* object, QEvent* event) {
   if (object == this && event->type() >= QEvent::User && event->type() <= QEvent::MaxUser) {
     UnhandledException();
