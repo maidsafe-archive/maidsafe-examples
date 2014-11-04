@@ -20,3 +20,5 @@
 
 var normalWindowWidth = 350
 var normalWindowHeight = 450
+
+var tabItemFontSize = 18

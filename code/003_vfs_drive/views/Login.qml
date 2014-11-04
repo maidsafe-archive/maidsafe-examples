@@ -155,7 +155,7 @@ CustomWindow {
             topMargin: 30
           }
           Connections {
-            onCreateAccountErrorRaised: {
+            onLoginErrorRaised: {
               statusBar.showErrorStatus(errorMessage)
               rootItem.enabled = true
             }

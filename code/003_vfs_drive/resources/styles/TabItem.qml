@@ -20,16 +20,44 @@ import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import "../js/brushes.js" as DefaultBrushes
+import "../js/properties.js" as DefaultProperties
 
-Label {
-  anchors {
-    left: parent.left
-    right: parent.right
+Item {
+  property alias text : tabLabel.text
+  property alias contentHeight : tabLabel.contentHeight
+  property int index : 0
+  property bool isSelected : false
+  property int horizontalMargin : 5
+  signal clicked
+
+  id: tabItem
+  implicitWidth: tabLabel.contentWidth + (tabItem.horizontalMargin * 2)
+
+  Label {
+    id: tabLabel
+    anchors {
+      leftMargin: tabItem.horizontalMargin
+      rightMargin: tabItem.horizontalMargin
+    }
+    color: {
+      if (tabItem.isSelected) {
+        DefaultBrushes.normalBlue
+      } else if (mouseArea.containsMouse) {
+        DefaultBrushes.focusBlack
+      } else {
+        DefaultBrushes.darkerGray
+      }
+    }
+    font {
+      family: "Arial"
+      pixelSize: DefaultProperties.tabItemFontSize
+    }
+    MouseArea {
+      id: mouseArea
+      anchors.fill: parent
+      hoverEnabled: true
+      acceptedButtons: Qt.LeftButton
+      onClicked: tabItem.clicked()
+    }
   }
-  color: DefaultBrushes.focusBlack
-  font {
-    family: "Arial"
-    pointSize: 26
-  }
-  horizontalAlignment: Qt.AlignHCenter
 }

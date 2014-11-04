@@ -26,6 +26,7 @@
     <file>resources/styles/GrayButton.qml</file>
     <file>resources/styles/HeaderLabel.qml</file>
     <file>resources/styles/StatusBar.qml</file>
+    <file>resources/styles/TabItem.qml</file>
     <file>resources/styles/TextButton.qml</file>
   </qresource>
   <qresource prefix="/">

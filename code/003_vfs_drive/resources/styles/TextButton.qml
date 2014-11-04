@@ -31,7 +31,6 @@ Button {
       }
       color: DefaultBrushes.transparent
       implicitHeight: 30
-      implicitWidth: 80
     }
     label: Label {
       anchors.fill: parent
