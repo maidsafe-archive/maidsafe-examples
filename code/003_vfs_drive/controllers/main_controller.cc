@@ -30,13 +30,9 @@ namespace safedrive {
 
 MainController::MainController(QObject* parent)
     : QObject(parent),
-      main_engine_(),
-      views_(),
-      api_model_(),
-      testnet_status_monitor_(),
-      system_tray_(new SystemTray),
-      future_watcher_() {
+      system_tray_{new SystemTray} {
   qmlRegisterType<APIModel>("SAFEdrive", 1, 0, "APIModel");
+  qmlRegisterUncreatableType<MainController>("SAFEdrive", 1, 0, "Controller", "Error!! Attempting to access uncreatable type");
   installEventFilter(this);
   QTimer::singleShot(0, this, SLOT(EventLoopStarted()));
 }
@@ -63,18 +59,16 @@ void MainController::unmountDrive() {
   QtConcurrent::run(api_model_.get(), &APIModel::UnmountDrive);
 }
 
-void MainController::showLoginView() {
-  views_[kTestnetStatus]->hide();
-  views_[kCreateAccount]->hide();
-  views_[kLogin]->show();
-  CenterToScreen(views_[kLogin]);
-}
+void MainController::showLoginView() { setCurrentView(Login); }
 
-void MainController::showCreateAccountView() {
-  views_[kTestnetStatus]->hide();
-  views_[kLogin]->hide();
-  views_[kCreateAccount]->show();
-  CenterToScreen(views_[kCreateAccount]);
+void MainController::showCreateAccountView() { setCurrentView(CreateAccount); }
+
+MainController::ShowView MainController::currentView() const { return current_view_; }
+void MainController::setCurrentView(const ShowView new_current_view) {
+  if(new_current_view != current_view_) {
+    current_view_ = new_current_view;
+    emit currentViewChanged(current_view_);
+  }
 }
 
 bool MainController::eventFilter(QObject* object, QEvent* event) {
@@ -91,16 +85,17 @@ void MainController::EventLoopStarted() {
   main_engine_ = new QQmlApplicationEngine();
   main_engine_->addImportPath(qApp->applicationDirPath() + "/qml");
   main_engine_->addPluginPath(qApp->applicationDirPath() + "/plugins");
-  auto root_context_ = main_engine_->rootContext();
-  root_context_->setContextProperty(kMainController, this);
-  root_context_->setContextProperty(kAPIModel, api_model_.get());
-  root_context_->setContextProperty(kTestnetStatusMonitor, testnet_status_monitor_.get());
-  LoadViews();
+  auto root_context = main_engine_->rootContext();
+  root_context->setContextProperty(kMainController, this);
+  root_context->setContextProperty(kAPIModel, api_model_.get());
+  root_context->setContextProperty(kTestnetStatusMonitor, testnet_status_monitor_.get());
+
+  main_engine_->load(QUrl(QString("qrc:/views/MainWindow.qml")));
   InitSignals();
 
-  QQuickWindow* current_view = views_[kTestnetStatus];
-  current_view->show();
-  CenterToScreen(current_view);
+  main_window_ = qobject_cast<QQuickWindow*>(main_engine_->rootObjects().first());
+  main_window_->show();
+  CenterToScreen(main_window_);
   system_tray_->show();
 }
 
@@ -116,9 +111,8 @@ void MainController::CreateAccountCompleted() {
   if (future_watcher_.isCanceled() || !future_watcher_.result())
     return;
 
-  views_[kCreateAccount]->hide();
+  main_window_->hide();
   system_tray_->SetIsLoggedIn(true);
-  qApp->setQuitOnLastWindowClosed(false);
 }
 
 void MainController::LoginCompleted() {
@@ -126,46 +120,12 @@ void MainController::LoginCompleted() {
   if (future_watcher_.isCanceled() || !future_watcher_.result())
     return;
 
-  views_[kLogin]->hide();
+  main_window_->hide();
   system_tray_->SetIsLoggedIn(true);
-  qApp->setQuitOnLastWindowClosed(false);
 }
 
 void MainController::OpenDrive() {
   // Open SAFE Drive
-}
-
-void MainController::LoadViews() {
-  int view_count(4);
-
-  for (int i = 0; i < view_count; ++i) {
-    Views view_enum;
-    QString view_name;
-    switch (i) {
-      case 0:
-        view_enum = kLogin;
-        view_name = "Login";
-        break;
-      case 1:
-        view_enum = kCreateAccount;
-        view_name = "CreateAccount";
-        break;
-      case 2:
-        view_enum = kOpenDrive;
-        view_name = "OpenDrive";
-        break;
-      case 3:
-        view_enum = kTestnetStatus;
-        view_name = "TestnetStatus";
-        break;
-      default:
-        throw new std::exception();
-    }
-    main_engine_->load(QUrl(QString("qrc:/views/%1.qml").arg(view_name)));
-    views_[view_enum] = qobject_cast<QQuickWindow*>(main_engine_->rootObjects().value(i));
-    if (!views_[view_enum])
-      throw new std::exception();
-  }
 }
 
 void MainController::InitSignals() {

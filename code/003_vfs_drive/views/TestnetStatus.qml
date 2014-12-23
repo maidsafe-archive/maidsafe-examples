@@ -22,105 +22,103 @@ import SAFEdrive 1.0
 import "../resources/styles"
 import "../resources/js/brushes.js" as DefaultBrushes
 
-CustomWindow {
-  content: Item {
-    id: rootItem
+Item {
+  id: rootItem
+
+  Component.onCompleted: testnetStatusMonitor.isTestnetAvailable()
+  Connections {
+    onTestnetStatusReceived: {
+      if (isAvailable) {
+        statusBar.clearStatusInfo()
+        mainController.showLoginView()
+      } else {
+        progressStatus.visible = false;
+        errorStatus.visible = true;
+      }
+    }
+    target: testnetStatusMonitor
+  }
+
+  Item {
+    id: progressStatus
     anchors.fill: parent
-    Component.onCompleted: testnetStatusMonitor.isTestnetAvailable()
-    Connections {
-      onTestnetStatusReceived: {
-        if (isAvailable) {
-          statusBar.clearStatusInfo()
-          mainController.showLoginView()
-        } else {
-          progressStatus.visible = false;
-          errorStatus.visible = true;
-        }
+    visible: true
+
+    StatusBar  {
+      id: statusBar
+      anchors {
+        horizontalCenter: parent.horizontalCenter
+        top: parent.top
+        topMargin: 80
       }
-      target: testnetStatusMonitor
+      Component.onCompleted: statusBar.showProgressStatus(6)
+    }
+    Label {
+      id: statusLabel
+      anchors {
+        horizontalCenter: parent.horizontalCenter
+        top: statusBar.bottom
+        topMargin: 20
+      }
+      color: DefaultBrushes.labelGray
+      font {
+        family: "Arial"
+        pixelSize: 18
+      }
+      text: qsTr("Checking Testnet Status...")
+    }
+  }
+
+  Item {
+    id: errorStatus
+    anchors.fill: parent
+    visible: false
+
+    Image {
+      id: errorImage
+      anchors {
+        horizontalCenter: parent.horizontalCenter
+        top: parent.top
+        topMargin: 80
+      }
+      height: 35
+      width: 35
+      source: "qrc:/resources/icons/not_connected.svg"
     }
 
-    Item {
-      id: progressStatus
-      anchors.fill: parent
-      visible: true
-
-      StatusBar  {
-        id: statusBar
-        anchors {
-          horizontalCenter: parent.horizontalCenter
-          top: parent.top
-          topMargin: 80
-        }
-        Component.onCompleted: statusBar.showProgressStatus(6)
+    Label {
+      id: errorStatusLabel
+      anchors {
+        horizontalCenter: parent.horizontalCenter
+        top: errorImage.bottom
+        topMargin: 20
       }
-      Label {
-        id: statusLabel
-        anchors {
-          horizontalCenter: parent.horizontalCenter
-          top: statusBar.bottom
-          topMargin: 20
-        }
-        color: DefaultBrushes.labelGray
-        font {
-          family: "Arial"
-          pixelSize: 18
-        }
-        text: qsTr("Checking Testnet Status...")
+      color: DefaultBrushes.normalRed
+      font {
+        family: "Arial"
+        pixelSize: 18
       }
+      horizontalAlignment: Qt.AlignHCenter
+      text: qsTr("Testnet is unavailable\nPlease try again later")
     }
-
-    Item {
-      id: errorStatus
-      anchors.fill: parent
-      visible: false
-
-      Image {
-        id: errorImage
-        anchors {
-          horizontalCenter: parent.horizontalCenter
-          top: parent.top
-          topMargin: 80
-        }
-        height: 35
-        width: 35
-        source: "qrc:/resources/icons/not_connected.svg"
+    BlueButton {
+      id: quitButton
+      anchors {
+        bottom: parent.bottom
+        right: parent.right
       }
-
-      Label {
-        id: errorStatusLabel
-        anchors {
-          horizontalCenter: parent.horizontalCenter
-          top: errorImage.bottom
-          topMargin: 20
-        }
-        color: DefaultBrushes.normalRed
-        font {
-          family: "Arial"
-          pixelSize: 18
-        }
-        horizontalAlignment: Qt.AlignHCenter
-        text: qsTr("Testnet is unavailable\nPlease try again later")
+      text: qsTr("Quit")
+      onClicked: Qt.quit()
+    }
+    GrayButton {
+      id: ignoreButton
+      anchors {
+        bottom: parent.bottom
+        right: quitButton.left
+        rightMargin: 10
       }
-      BlueButton {
-        id: quitButton
-        anchors {
-          bottom: parent.bottom
-          right: parent.right
-        }
-        text: qsTr("Quit")
-        onClicked: Qt.quit()
-      }
-      GrayButton {
-        id: ignoreButton
-        anchors {
-          bottom: parent.bottom
-          right: quitButton.left
-          rightMargin: 10
-        }
-        text: qsTr("Ignore")
-        onClicked: mainController.showLoginView()
-      }
+      text: qsTr("Ignore")
+      onClicked: mainController.showLoginView()
     }
   }
 }

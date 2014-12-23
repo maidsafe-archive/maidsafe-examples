@@ -22,18 +22,9 @@ import SAFEdrive 1.0
 import "../resources/styles"
 import "../resources/js/brushes.js" as DefaultBrushes
 
-CustomWindow {
-  property Component currentComponent : warningPage
-
-  content: Loader {
-    id: loader
-    anchors.fill: parent
-    sourceComponent: currentComponent
-  }
-
-  property Component warningPage : Item {
-    anchors.fill: parent
-
+Loader {
+  id: loader
+  sourceComponent: Item {
     Item {
       anchors {
         bottomMargin: warningNextButton.height
@@ -86,104 +77,103 @@ CustomWindow {
         right: parent.right
       }
       enabled: warningCheckBox.checked
-      onClicked: currentComponent = loginPage
+      onClicked: loader.sourceComponent = loginPage
       text: qsTr("Next")
     }
   }
 
   property Component loginPage : Item {
-      id: rootItem
-      anchors.fill: parent
+    id: rootItem
 
-      Item {
-        anchors {
-          bottomMargin: loginButton.height
-          fill: parent
-        }
-        HeaderLabel {
-          id: loginHeaderLabel
-          anchors {
-            top: parent.top
-            topMargin: 20
-          }
-          text: qsTr("Log in")
-        }
-        CustomTextField {
-          id: pinBox
-          anchors {
-            horizontalCenter: parent.horizontalCenter
-            top: loginHeaderLabel.bottom
-            topMargin: 30
-          }
-          echoMode: TextInput.Password
-          Keys.onEnterPressed: loginButton.clicked()
-          Keys.onReturnPressed: loginButton.clicked()
-          onTextChanged: statusBar.clearStatusInfo()
-          placeholderText: qsTr("PIN")
-        }
-        CustomTextField {
-          id: keywordBox
-          anchors {
-            horizontalCenter: parent.horizontalCenter
-            top: pinBox.bottom
-            topMargin: 10
-          }
-          echoMode: TextInput.Password
-          Keys.onEnterPressed: loginButton.clicked()
-          Keys.onReturnPressed: loginButton.clicked()
-          onTextChanged: statusBar.clearStatusInfo()
-          placeholderText: qsTr("Keyword")
-        }
-        CustomTextField {
-          id: passwordBox
-          anchors {
-            horizontalCenter: parent.horizontalCenter
-            top: keywordBox.bottom
-            topMargin: 10
-          }
-          echoMode: TextInput.Password
-          Keys.onEnterPressed: loginButton.clicked()
-          Keys.onReturnPressed: loginButton.clicked()
-          onTextChanged: statusBar.clearStatusInfo()
-          placeholderText: qsTr("Password")
-        }
-        StatusBar  {
-          id: statusBar
-          anchors {
-            horizontalCenter: parent.horizontalCenter
-            top: passwordBox.bottom
-            topMargin: 30
-          }
-          Connections {
-            onLoginErrorRaised: {
-              statusBar.showErrorStatus(errorMessage)
-              rootItem.enabled = true
-            }
-            target: apiModel
-          }
-        }
+    Item {
+      anchors {
+        bottomMargin: loginButton.height
+        fill: parent
       }
-      BlueButton {
-        id: loginButton
+      HeaderLabel {
+        id: loginHeaderLabel
         anchors {
-          bottom: parent.bottom
-          right: parent.right
+          top: parent.top
+          topMargin: 20
         }
-        onClicked: {
-          rootItem.enabled = false
-          statusBar.showProgressStatus()
-          mainController.login(pinBox.text, keywordBox.text, passwordBox.text)
-        }
-        text: qsTr("Login")
+        text: qsTr("Log in")
       }
-      TextButton {
-        id: createAccountButton
+      CustomTextField {
+        id: pinBox
         anchors {
-          bottom: parent.bottom
-          left: parent.left
+          horizontalCenter: parent.horizontalCenter
+          top: loginHeaderLabel.bottom
+          topMargin: 30
         }
-        onClicked: mainController.showCreateAccountView()
-        text: qsTr("Create Account")
+        echoMode: TextInput.Password
+        Keys.onEnterPressed: loginButton.clicked()
+        Keys.onReturnPressed: loginButton.clicked()
+        onTextChanged: statusBar.clearStatusInfo()
+        placeholderText: qsTr("PIN")
+      }
+      CustomTextField {
+        id: keywordBox
+        anchors {
+          horizontalCenter: parent.horizontalCenter
+          top: pinBox.bottom
+          topMargin: 10
+        }
+        echoMode: TextInput.Password
+        Keys.onEnterPressed: loginButton.clicked()
+        Keys.onReturnPressed: loginButton.clicked()
+        onTextChanged: statusBar.clearStatusInfo()
+        placeholderText: qsTr("Keyword")
+      }
+      CustomTextField {
+        id: passwordBox
+        anchors {
+          horizontalCenter: parent.horizontalCenter
+          top: keywordBox.bottom
+          topMargin: 10
+        }
+        echoMode: TextInput.Password
+        Keys.onEnterPressed: loginButton.clicked()
+        Keys.onReturnPressed: loginButton.clicked()
+        onTextChanged: statusBar.clearStatusInfo()
+        placeholderText: qsTr("Password")
+      }
+      StatusBar  {
+        id: statusBar
+        anchors {
+          horizontalCenter: parent.horizontalCenter
+          top: passwordBox.bottom
+          topMargin: 30
+        }
+        Connections {
+          onLoginErrorRaised: {
+            statusBar.showErrorStatus(errorMessage)
+            rootItem.enabled = true
+          }
+          target: apiModel
+        }
       }
     }
+    BlueButton {
+      id: loginButton
+      anchors {
+        bottom: parent.bottom
+        right: parent.right
+      }
+      onClicked: {
+        rootItem.enabled = false
+        statusBar.showProgressStatus()
+        mainController.login(pinBox.text, keywordBox.text, passwordBox.text)
+      }
+      text: qsTr("Login")
+    }
+    TextButton {
+      id: createAccountButton
+      anchors {
+        bottom: parent.bottom
+        left: parent.left
+      }
+      onClicked: mainController.showCreateAccountView()
+      text: qsTr("Create Account")
+    }
+  }
 }

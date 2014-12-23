@@ -24,7 +24,7 @@ import "../js/properties.js" as DefaultProperties
 
 ApplicationWindow {
   // Content Property for the Window
-  property Component content: null
+  property alias contentSource: contentLoader.source
 
   color: "white"
   height: DefaultProperties.normalWindowHeight
@@ -60,7 +60,6 @@ ApplicationWindow {
         top: headerImage.bottom
         topMargin: 0
       }
-      sourceComponent: content
     }
   }
 }

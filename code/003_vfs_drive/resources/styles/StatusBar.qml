@@ -73,81 +73,33 @@ Item {
       anchors.centerIn: parent
       spacing: progressStatus.indicatorRadius
 
-      Rectangle {
-        id: indicatorOne
-        color: DefaultBrushes.normalBlue
-        height: progressStatus.indicatorRadius * 2
-        opacity: 0.5
-        radius: progressStatus.indicatorRadius
-        width: progressStatus.indicatorRadius * 2
-      }
-      Rectangle {
-        id: indicatorTwo
-        color: DefaultBrushes.normalBlue
-        height: progressStatus.indicatorRadius * 2
-        opacity: 0.5
-        radius: progressStatus.indicatorRadius
-        width: progressStatus.indicatorRadius * 2
-      }
-      Rectangle {
-        id: indicatorThree
-        color: DefaultBrushes.normalBlue
-        height: progressStatus.indicatorRadius * 2
-        opacity: 0.5
-        radius: progressStatus.indicatorRadius
-        width: progressStatus.indicatorRadius * 2
-      }
-      Rectangle {
-        id: indicatorFour
-        color: DefaultBrushes.normalBlue
-        height: progressStatus.indicatorRadius * 2
-        opacity: 0.5
-        radius: progressStatus.indicatorRadius
-        width: progressStatus.indicatorRadius * 2
-      }
-      Rectangle {
-        id: indicatorFive
-        color: DefaultBrushes.normalBlue
-        height: progressStatus.indicatorRadius * 2
-        opacity: 0.5
-        radius: progressStatus.indicatorRadius
-        width: progressStatus.indicatorRadius * 2
-      }
-      SequentialAnimation {
-        loops: Animation.Infinite
-        running: progressStatus.isAnimationRunning
+      Repeater {
+        id: indicatorRepeater
 
-        ParallelAnimation {
-          NumberAnimation { target: indicatorTwo; property: "opacity"; to: 0.5; duration: 100 }
-          NumberAnimation { target: indicatorOne; property: "opacity"; to: 1; duration: 100 }
-        }
-        ParallelAnimation {
-          NumberAnimation { target: indicatorOne; property: "opacity"; to: 0.5; duration: 100 }
-          NumberAnimation { target: indicatorTwo; property: "opacity"; to: 1.0; duration: 100 }
-        }
-        ParallelAnimation {
-          NumberAnimation { target: indicatorTwo; property: "opacity"; to: 0.5; duration: 100 }
-          NumberAnimation { target: indicatorThree; property: "opacity"; to: 1.0; duration: 100 }
-        }
-        ParallelAnimation {
-          NumberAnimation { target: indicatorThree; property: "opacity"; to: 0.5; duration: 100 }
-          NumberAnimation { target: indicatorFour; property: "opacity"; to: 1.0; duration: 100 }
-        }
-        ParallelAnimation {
-          NumberAnimation { target: indicatorFour; property: "opacity"; to: 0.5; duration: 100 }
-          NumberAnimation { target: indicatorFive; property: "opacity"; to: 1.0; duration: 100 }
-        }
-        ParallelAnimation {
-          NumberAnimation { target: indicatorFive; property: "opacity"; to: 0.5; duration: 100 }
-          NumberAnimation { target: indicatorFour; property: "opacity"; to: 1.0; duration: 100 }
-        }
-        ParallelAnimation {
-          NumberAnimation { target: indicatorFour; property: "opacity"; to: 0.5; duration: 100 }
-          NumberAnimation { target: indicatorThree; property: "opacity"; to: 1.0; duration: 100 }
-        }
-        ParallelAnimation {
-          NumberAnimation { target: indicatorThree; property: "opacity"; to: 0.5; duration: 100 }
-          NumberAnimation { target: indicatorTwo; property: "opacity"; to: 1.0; duration: 100 }
+        model: 5
+        property int currentAnimIndex: 0
+        property int delta: 1
+        onCurrentAnimIndexChanged: delta *= (!currentAnimIndex || currentAnimIndex === count - 1 ? -1 : 1)
+
+        delegate: Rectangle {
+          id: indicator
+
+          color: DefaultBrushes.normalBlue
+          height: progressStatus.indicatorRadius * 2
+          width: progressStatus.indicatorRadius * 2
+          opacity: 0.5
+          radius: progressStatus.indicatorRadius
+
+          SequentialAnimation {
+            running: progressStatus.isAnimationRunning && indicatorRepeater.currentAnimIndex === model.index
+            loops: Animation.Infinite; alwaysRunToEnd: true
+            NumberAnimation { target: indicator; property: "opacity"; to: 1; duration: 100 }
+            PropertyAction {
+              target: indicatorRepeater; property: "currentAnimIndex"
+              value: indicatorRepeater.currentAnimIndex + indicatorRepeater.delta;
+            }
+            NumberAnimation { target: indicator; property: "opacity"; to: 0.5; duration: 100 }
+          }
         }
       }
     }

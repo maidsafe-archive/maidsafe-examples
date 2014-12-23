@@ -34,13 +34,15 @@ namespace safedrive {
 
 class MainController : public QObject {
   Q_OBJECT
+  Q_ENUMS(ShowView)
+  Q_PROPERTY(ShowView currentView READ currentView NOTIFY currentViewChanged FINAL)
 
  public:
-  enum Views {
-    kLogin,
-    kCreateAccount,
-    kOpenDrive,
-    kTestnetStatus
+  enum ShowView {
+    Login,
+    CreateAccount,
+    OpenMaidSafeDrive,
+    TestnetStatus,
   };
 
   explicit MainController(QObject* parent = 0);
@@ -53,6 +55,10 @@ class MainController : public QObject {
   Q_INVOKABLE void unmountDrive();
   Q_INVOKABLE void showLoginView();
   Q_INVOKABLE void showCreateAccountView();
+
+  ShowView currentView() const;
+  void setCurrentView(const ShowView new_current_view);
+  Q_SIGNAL void currentViewChanged(ShowView arg);
 
  protected:
   bool eventFilter(QObject* object, QEvent* event);
@@ -67,16 +73,17 @@ class MainController : public QObject {
  private:
   MainController(const MainController&);
   MainController& operator=(const MainController&);
-  void LoadViews();
   void InitSignals();
   void CenterToScreen(QQuickWindow* widget);
 
-  QQmlApplicationEngine* main_engine_;
-  QMap<Views, QQuickWindow*> views_;
+  QQmlApplicationEngine* main_engine_{};
+  QQuickWindow* main_window_{};
   std::unique_ptr<APIModel> api_model_;
   std::unique_ptr<TestnetStatusMonitor> testnet_status_monitor_;
   std::unique_ptr<SystemTray> system_tray_;
   QFutureWatcher<bool> future_watcher_;
+
+  ShowView current_view_{TestnetStatus};
 };
 
 }  // namespace safedrive

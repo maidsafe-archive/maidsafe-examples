@@ -56,7 +56,7 @@ ms_glob_dir(Helpers ${ProjectSourceDir}/helpers "Helpers\\\\")
 
 set(QtPchHeader ${ProjectSourceDir}/helpers/qt_push_headers.h)
 if(NOT MSVC)
-  list(REMOVE_ITEM Helpers ${ProjectSourceDir}/helpers/qt_push_headers.cc)
+  list(REMOVE_ITEM HelpersSources ${ProjectSourceDir}/helpers/qt_push_headers.cc)
 endif()
 
 ms_glob_dir(Controllers ${ProjectSourceDir}/controllers "Controllers\\\\")
@@ -91,7 +91,7 @@ add_executable(${PROJECT_NAME} ${UiMain}
                                ${ViewsAllFiles}
                                ${UiAppIconResource})
 
-target_link_libraries(${PROJECT_NAME} maidsafe_api ${Qt5TargetLibs})
+target_link_libraries(${PROJECT_NAME} maidsafe_api ${Qt5TargetLibs} "-ldl")
 if(COMMAND apply_target_properties)  # Available if run from maidsafe-examples root
   apply_target_properties(${PROJECT_NAME})
 endif()

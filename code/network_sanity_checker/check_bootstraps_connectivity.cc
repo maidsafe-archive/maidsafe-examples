@@ -19,19 +19,17 @@ using boost::asio::ip::address;
 namespace {
 
 std::future<int> CanConnect(const udp::endpoint& contact) {
-  return std::async(std::launch::async, [contact]()->int {
-    maidsafe::asymm::Keys keys{ maidsafe::asymm::GenerateKeyPair() };
+  return std::async(std::launch::async, [contact]() -> int {
+    maidsafe::asymm::Keys keys{maidsafe::asymm::GenerateKeyPair()};
     maidsafe::NodeId chosen_bootstrap_peer;
     maidsafe::rudp::NatType nat_type;
     maidsafe::rudp::ManagedConnections managed_connections;
     return managed_connections.Bootstrap(
-        std::vector<udp::endpoint>{ contact },
-        [](const std::string&) {},
+        std::vector<udp::endpoint>{contact}, [](const std::string&) {},
         [](const maidsafe::NodeId&) {},
-        maidsafe::NodeId{ maidsafe::NodeId::IdType::kRandomId },
+        maidsafe::NodeId{maidsafe::RandomString(maidsafe::NodeId::kSize)},
         std::make_shared<maidsafe::asymm::PrivateKey>(keys.private_key),
-        std::make_shared<maidsafe::asymm::PublicKey>(keys.public_key),
-        chosen_bootstrap_peer,
+        std::make_shared<maidsafe::asymm::PublicKey>(keys.public_key), chosen_bootstrap_peer,
         nat_type);
   });
 }

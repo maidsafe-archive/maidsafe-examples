@@ -32,12 +32,12 @@ APIModel::APIModel(QObject* parent)
     : QObject(parent),
       private_client_() {}
 
-bool APIModel::CreateAccount(const QString& pin, const QString& keyword, const QString& password) {
+bool APIModel::CreateAccount(const QString& /*pin*/, const QString& /*keyword*/, const QString& /*password*/) {
   try {
-    private_client_ = ms::PrivateClient::CreateAccount(keyword.toStdString(),
-                                                       std::stoi(pin.toStdString()),
-                                                       password.toStdString()).get();
-    return true;
+    //    private_client_ = ms::PrivateClient::CreateAccount(keyword.toStdString(),
+    //                                                       std::stoi(pin.toStdString()),
+    //                                                       password.toStdString()).get();
+        return true;
   } catch(const ms::maidsafe_error& /*error_code*/) {
     emit createAccountErrorRaised("Error Creating Account");
   } catch(...) {
@@ -46,11 +46,11 @@ bool APIModel::CreateAccount(const QString& pin, const QString& keyword, const Q
   return false;
 }
 
-bool APIModel::Login(const QString& pin, const QString& keyword, const QString& password) {
+bool APIModel::Login(const QString& /*pin*/, const QString& /*keyword*/, const QString& /*password*/) {
   try {
-    private_client_ = ms::PrivateClient::Login(keyword.toStdString(),
-                                               std::stoi(pin.toStdString()),
-                                               password.toStdString()).get();
+//    private_client_ = ms::PrivateClient::Login(keyword.toStdString(),
+//                                               std::stoi(pin.toStdString()),
+//                                               password.toStdString()).get();
     return true;
   }
   catch (const ms::maidsafe_error& /*error_code*/) {
