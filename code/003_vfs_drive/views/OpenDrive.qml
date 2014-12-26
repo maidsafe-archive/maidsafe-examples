@@ -20,9 +20,117 @@ import QtQuick 2.1
 import QtQuick.Controls 1.0
 import SAFEdrive 1.0
 import "../resources/styles"
+import "../resources/js/brushes.js" as DefaultBrushes
+import "../resources/js/properties.js" as DefaultProperties
 
-CustomWindow {
-  id: rootWindow
-  content: Item {
+Item {
+  id: rootItem
+
+  HeaderLabel {
+    id: headerLabel
+    anchors {
+      top: parent.top
+      topMargin: 20
+    }
+    text: qsTr("Your Drive")
+  }
+
+  Item {
+    id: verticalSpacer
+    anchors { top: headerLabel.bottom; horizontalCenter: parent.horizontalCenter }
+    height: 45; width: 1
+  }
+
+  Row {
+    id: mountDismountRow
+
+    anchors { top: verticalSpacer.bottom; left: parent.left; leftMargin: 15 }
+    spacing: 8
+
+    opacity: !statusBar.isInProgress / 2 + 0.5
+    enabled: !statusBar.isInProgress
+
+//    Image {
+//      id: safeDriveImage
+//    }
+
+    Rectangle {
+      id: placeholderForProperImage
+      height: 30
+      width: 15
+      color: DefaultBrushes.labelGray
+    }
+
+    Text {
+      id: safeDriveText
+
+      text: qsTr("SAFE Drive")
+      font { family: "Arial"; pointSize: DefaultProperties.subHeaderFontPointSize }
+
+      anchors { verticalCenter: parent.verticalCenter }
+      color: DefaultBrushes.labelGray
+    }
+
+    Item {
+      id: horizSpacer
+      height: 1; width: 50
+    }
+
+    Image {
+      id: openDriveImage
+      anchors { verticalCenter: parent.verticalCenter }
+      source: "qrc:/resources/icons/open_drive.png"
+      opacity: mainController.currentView === MainController.UnmountOrOpenDrive
+      enabled: opacity
+
+      MouseArea {
+        anchors.fill: parent
+        onClicked: mainController.openDrive()
+      }
+    }
+
+    Image {
+      id: mountDismountImage
+
+      anchors { verticalCenter: parent.verticalCenter }
+      source: mainController.currentView === MainController.MountDrive ?
+                "qrc:/resources/icons/mount_drive.png" : "qrc:/resources/icons/unmount_drive.png"
+
+      MouseArea {
+        anchors.fill: parent
+        onClicked: {
+          statusBar.showProgressStatus(DefaultProperties.smallProgressBarRadius)
+          if(mainController.currentView === MainController.MountDrive) mainController.mountDrive()
+          else mainController.unmountDrive()
+        }
+      }
+    }
+  }
+
+  StatusBar  {
+    id: statusBar
+    anchors {
+      horizontalCenter: parent.horizontalCenter
+      top: mountDismountRow.bottom
+      topMargin: 30
+    }
+    Connections {
+      onMountOrUnmountErrorRaised: statusBar.showErrorStatus(errorMessage)
+      target: apiModel
+    }
+    Connections {
+      onCurrentViewChanged: statusBar.clearStatusInfo()
+      target: mainController
+    }
+  }
+
+  BlueButton {
+    id: closeButton
+    anchors {
+      bottom: parent.bottom
+      right: parent.right
+    }
+    onClicked: rootWindow.hide()
+    text: qsTr("Close")
   }
 }

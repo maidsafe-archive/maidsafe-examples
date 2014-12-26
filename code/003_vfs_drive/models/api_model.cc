@@ -18,6 +18,8 @@
 
 #include "models/api_model.h"
 
+#include <thread>
+#include <chrono>
 #include <map>
 #include <vector>
 
@@ -62,10 +64,36 @@ bool APIModel::Login(const QString& /*pin*/, const QString& /*keyword*/, const Q
   return false;
 }
 
-void APIModel::MountDrive() {
+QString APIModel::MountDrive() {
+  static bool error_simulator;  // simulate error
+  try {
+    std::this_thread::sleep_for(std::chrono::seconds{2});  // simulate delay
+    if(!error_simulator) { error_simulator = true; throw ms::maidsafe_error{}; }
+    return QCoreApplication::applicationDirPath();
+  }
+  catch (const ms::maidsafe_error&) {
+    emit mountOrUnmountErrorRaised("Error Mounting Device. Try Again.");
+  }
+  catch (...) {
+    emit UnhandledException();
+  }
+  return "";
 }
 
-void APIModel::UnmountDrive() {
+bool APIModel::UnmountDrive() {
+  static bool error_simulator;  // simulate error
+  try {
+    std::this_thread::sleep_for(std::chrono::seconds{1});  // simulate delay
+    if(!error_simulator) { error_simulator = true; throw ms::maidsafe_error{}; }
+    return true;
+  }
+  catch (const ms::maidsafe_error&) {
+    emit mountOrUnmountErrorRaised("Error Unmounting Device. Try Again.");
+  }
+  catch (...) {
+    emit UnhandledException();
+  }
+  return false;
 }
 
 }  // namespace safedrive

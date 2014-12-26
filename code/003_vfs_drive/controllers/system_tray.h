@@ -38,7 +38,7 @@ class SystemTray : public QSystemTrayIcon {
   void SetIsLoggedIn(bool is_logged_in);
 
  signals:  // NOLINT - Viv
-  void OpenDriveRequested();
+  void ShowSafeDriveRequested();
 
  private slots:  // NOLINT - Viv
   void OnSystrayActivate(QSystemTrayIcon::ActivationReason reason);

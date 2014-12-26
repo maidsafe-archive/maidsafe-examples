@@ -38,10 +38,12 @@ class MainController : public QObject {
   Q_PROPERTY(ShowView currentView READ currentView NOTIFY currentViewChanged FINAL)
 
  public:
+  // :span- In future possibly keep multiple controllers and distribute enums accordingly among them.
   enum ShowView {
     Login,
     CreateAccount,
-    OpenMaidSafeDrive,
+    MountDrive,
+    UnmountOrOpenDrive,
     TestnetStatus,
   };
 
@@ -53,6 +55,7 @@ class MainController : public QObject {
   Q_INVOKABLE void login(const QString& pin, const QString& keyword, const QString& password);
   Q_INVOKABLE void mountDrive();
   Q_INVOKABLE void unmountDrive();
+  Q_INVOKABLE void openDrive();
   Q_INVOKABLE void showLoginView();
   Q_INVOKABLE void showCreateAccountView();
 
@@ -68,7 +71,9 @@ class MainController : public QObject {
   void UnhandledException();
   void CreateAccountCompleted();
   void LoginCompleted();
-  void OpenDrive();
+  void ShowSafeDrive();
+  void MountDriveCompleted();
+  void UnmountDriveCompleted();
 
  private:
   MainController(const MainController&);
@@ -82,8 +87,10 @@ class MainController : public QObject {
   std::unique_ptr<TestnetStatusMonitor> testnet_status_monitor_;
   std::unique_ptr<SystemTray> system_tray_;
   QFutureWatcher<bool> future_watcher_;
+  QFutureWatcher<QString> future_watcher_mount_;
 
   ShowView current_view_{TestnetStatus};
+  QString drive_path_{};
 };
 
 }  // namespace safedrive

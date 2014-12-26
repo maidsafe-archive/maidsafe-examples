@@ -22,3 +22,7 @@ var normalWindowWidth = 350
 var normalWindowHeight = 450
 
 var tabItemFontSize = 18
+
+var smallProgressBarRadius = 2
+
+var subHeaderFontPointSize = 16

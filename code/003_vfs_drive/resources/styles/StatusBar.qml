@@ -22,6 +22,8 @@ import QtQuick.Layouts 1.0
 import "../js/brushes.js" as DefaultBrushes
 
 Item {
+  readonly property alias isInProgress: progressStatus.isAnimationRunning
+
   implicitHeight: Math.max(errorStatus.implicitHeight, progressStatus.implicitHeight)
   implicitWidth: Math.max(errorStatus.implicitWidth, progressStatus.implicitWidth)
 
@@ -125,6 +127,8 @@ Item {
     errorStatus.visible = false
   }
 
+  // :span- why? just make it a readonly alias like now done on the top - more natural and better
+  //        to listen to and take for other uses.
   function isInProgressStatus() {
     return progressStatus.isAnimationRunning
   }

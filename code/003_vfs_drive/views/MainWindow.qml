@@ -3,13 +3,15 @@ import SAFEdrive 1.0
 import "../resources/styles"
 
 CustomWindow {
-  contentSource: mainController.currentView === Controller.Login ?
+  id: rootWindow
+
+  contentSource: mainController.currentView === MainController.Login ?
                    "Login.qml"
                  :
-                   mainController.currentView === Controller.CreateAccount ?
+                   mainController.currentView === MainController.CreateAccount ?
                      "CreateAccount.qml"
                    :
-                     mainController.currentView === Controller.TestnetStatus ?
+                     mainController.currentView === MainController.TestnetStatus ?
                        "TestnetStatus.qml"
                      :
                        "OpenDrive.qml"

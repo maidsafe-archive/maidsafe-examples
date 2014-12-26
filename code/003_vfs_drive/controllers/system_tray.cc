@@ -35,13 +35,17 @@ SystemTray::SystemTray()
 
   setToolTip("SAFEdrive");
 
-  open_drive_ = menu_->addAction(tr("Open Drive"), this, SIGNAL(OpenDriveRequested()));
+  open_drive_ = menu_->addAction(tr("Show SAFEDrive"), this, SIGNAL(ShowSafeDriveRequested()));
   open_drive_->setVisible(false);
 
   menu_->addAction(tr("Quit"), qApp, SLOT(quit()));
   setContextMenu(menu_);
 }
 
+
+// :span- It shouldn't require you to reach this page to show the Action. Think if you reach login page
+//        and accidently closed the window. The sys-tray only has an option to quit which is strange
+//        because why to have sys-tray at all then.
 void SystemTray::SetIsLoggedIn(bool is_logged_in) {
   is_logged_in_ = is_logged_in;
   open_drive_->setVisible(is_logged_in_);
@@ -49,7 +53,7 @@ void SystemTray::SetIsLoggedIn(bool is_logged_in) {
 
 void SystemTray::OnSystrayActivate(QSystemTrayIcon::ActivationReason reason) {
   if (reason == QSystemTrayIcon::DoubleClick && is_logged_in_)
-    emit OpenDriveRequested();
+    emit ShowSafeDriveRequested();
 }
 
 SystemTray::~SystemTray() {

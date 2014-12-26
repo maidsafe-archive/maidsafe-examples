@@ -25,5 +25,8 @@
         <file>views/OpenDrive.qml</file>
         <file>views/TestnetStatus.qml</file>
         <file>views/MainWindow.qml</file>
+        <file>resources/icons/mount_drive.png</file>
+        <file>resources/icons/open_drive.png</file>
+        <file>resources/icons/unmount_drive.png</file>
     </qresource>
 </RCC>

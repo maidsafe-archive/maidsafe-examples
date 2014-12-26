@@ -41,8 +41,8 @@ class APIModel : public QObject {
 
   bool CreateAccount(const QString& pin, const QString& keyword, const QString& password);
   bool Login(const QString& pin, const QString& keyword, const QString& password);
-  void MountDrive();
-  void UnmountDrive();
+  QString MountDrive();
+  bool UnmountDrive();
 
  signals:
   void createAccountErrorRaised(const QString& errorMessage);

@@ -32,7 +32,7 @@ MainController::MainController(QObject* parent)
     : QObject(parent),
       system_tray_{new SystemTray} {
   qmlRegisterType<APIModel>("SAFEdrive", 1, 0, "APIModel");
-  qmlRegisterUncreatableType<MainController>("SAFEdrive", 1, 0, "Controller", "Error!! Attempting to access uncreatable type");
+  qmlRegisterUncreatableType<MainController>("SAFEdrive", 1, 0, "MainController", "Error!! Attempting to access uncreatable type");
   installEventFilter(this);
   QTimer::singleShot(0, this, SLOT(EventLoopStarted()));
 }
@@ -52,11 +52,19 @@ void MainController::login(const QString& pin, const QString& keyword, const QSt
 }
 
 void MainController::mountDrive() {
-  QtConcurrent::run(api_model_.get(), &APIModel::MountDrive);
+  connect(&future_watcher_mount_, SIGNAL(finished()), this, SLOT(MountDriveCompleted()));
+  future_watcher_mount_.setFuture(
+        QtConcurrent::run(api_model_.get(), &APIModel::MountDrive));
 }
 
 void MainController::unmountDrive() {
-  QtConcurrent::run(api_model_.get(), &APIModel::UnmountDrive);
+  connect(&future_watcher_, SIGNAL(finished()), this, SLOT(UnmountDriveCompleted()));
+  future_watcher_.setFuture(
+        QtConcurrent::run(api_model_.get(), &APIModel::UnmountDrive));
+}
+
+/*Q_INVOKABLE*/ void MainController::openDrive() {
+  QDesktopServices::openUrl(QUrl{"file:///" + QDir::toNativeSeparators(drive_path_)});
 }
 
 void MainController::showLoginView() { setCurrentView(Login); }
@@ -111,8 +119,8 @@ void MainController::CreateAccountCompleted() {
   if (future_watcher_.isCanceled() || !future_watcher_.result())
     return;
 
-  main_window_->hide();
   system_tray_->SetIsLoggedIn(true);
+  setCurrentView(MountDrive);
 }
 
 void MainController::LoginCompleted() {
@@ -120,17 +128,35 @@ void MainController::LoginCompleted() {
   if (future_watcher_.isCanceled() || !future_watcher_.result())
     return;
 
-  main_window_->hide();
   system_tray_->SetIsLoggedIn(true);
+  setCurrentView(MountDrive);
 }
 
-void MainController::OpenDrive() {
-  // Open SAFE Drive
+void MainController::MountDriveCompleted() {
+  disconnect(&future_watcher_mount_, SIGNAL(finished()), this, SLOT(MountDriveCompleted()));
+  if (future_watcher_mount_.isCanceled() || future_watcher_mount_.result() == "")
+    return;
+
+  drive_path_ = future_watcher_mount_.result();
+  setCurrentView(UnmountOrOpenDrive);
+}
+
+void MainController::UnmountDriveCompleted() {
+  disconnect(&future_watcher_, SIGNAL(finished()), this, SLOT(UnmountDriveCompleted()));
+  if (future_watcher_.isCanceled()  || !future_watcher_.result())
+    return;
+
+  drive_path_ = "";
+  setCurrentView(MountDrive);
+}
+
+void MainController::ShowSafeDrive() {
+  main_window_->show();
 }
 
 void MainController::InitSignals() {
-  connect(system_tray_.get(),   &SystemTray::OpenDriveRequested,
-          this,                 &MainController::OpenDrive);
+  connect(system_tray_.get(),   &SystemTray::ShowSafeDriveRequested,
+          this,                 &MainController::ShowSafeDrive);
   connect(api_model_.get(),     &APIModel::UnhandledException,
           this,                 &MainController::UnhandledException);
 }
