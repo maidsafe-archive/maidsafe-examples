@@ -16,8 +16,8 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#ifndef SAFEDRIVE_HELPERS_QML_INDEXERS_H_
-#define SAFEDRIVE_HELPERS_QML_INDEXERS_H_
+#ifndef CODE_003_VFS_DRIVE_HELPERS_QML_INDEXERS_H_
+#define CODE_003_VFS_DRIVE_HELPERS_QML_INDEXERS_H_
 
 #include "helpers/qt_push_headers.h"
 #include "helpers/qt_pop_headers.h"
@@ -31,5 +31,5 @@ const QString kTestnetStatusMonitor("testnetStatusMonitor");
 
 }  // namespace safedrive
 
-#endif  // SAFEDRIVE_HELPERS_QML_INDEXERS_H_
+#endif  // CODE_003_VFS_DRIVE_HELPERS_QML_INDEXERS_H_
 

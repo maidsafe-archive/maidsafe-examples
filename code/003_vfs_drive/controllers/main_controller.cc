@@ -32,7 +32,10 @@ MainController::MainController(QObject* parent)
     : QObject(parent),
       system_tray_{new SystemTray} {
   qmlRegisterType<APIModel>("SAFEdrive", 1, 0, "APIModel");
-  qmlRegisterUncreatableType<MainController>("SAFEdrive", 1, 0, "MainController", "Error!! Attempting to access uncreatable type");
+  qmlRegisterUncreatableType<MainController>("SAFEdrive",
+                                             1, 0,
+                                             "MainController",
+                                             "Error!! Attempting to access uncreatable type");
   installEventFilter(this);
   QTimer::singleShot(0, this, SLOT(EventLoopStarted()));
 }
@@ -64,7 +67,7 @@ void MainController::unmountDrive() {
 }
 
 /*Q_INVOKABLE*/ void MainController::openDrive() {
-  QDesktopServices::openUrl(QUrl{"file:///" + QDir::toNativeSeparators(drive_path_)});
+  QDesktopServices::openUrl(QUrl{"file:///" + drive_path_});
 }
 
 void MainController::showLoginView() { setCurrentView(Login); }
@@ -73,7 +76,7 @@ void MainController::showCreateAccountView() { setCurrentView(CreateAccount); }
 
 MainController::ShowView MainController::currentView() const { return current_view_; }
 void MainController::setCurrentView(const ShowView new_current_view) {
-  if(new_current_view != current_view_) {
+  if (new_current_view != current_view_) {
     current_view_ = new_current_view;
     emit currentViewChanged(current_view_);
   }
@@ -103,8 +106,8 @@ void MainController::EventLoopStarted() {
 
   main_window_ = qobject_cast<QQuickWindow*>(main_engine_->rootObjects().first());
   main_window_->show();
-  CenterToScreen(main_window_);
   system_tray_->show();
+  CenterToScreen(main_window_);
 }
 
 void MainController::UnhandledException() {

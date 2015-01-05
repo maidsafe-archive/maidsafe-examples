@@ -16,8 +16,8 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#ifndef SAFEDRIVE_MODELS_TESTNET_STATUS_MONITOR_H_
-#define SAFEDRIVE_MODELS_TESTNET_STATUS_MONITOR_H_
+#ifndef CODE_003_VFS_DRIVE_MODELS_TESTNET_STATUS_MONITOR_H_
+#define CODE_003_VFS_DRIVE_MODELS_TESTNET_STATUS_MONITOR_H_
 
 // std
 #include <memory>
@@ -43,14 +43,13 @@ class TestnetStatusMonitor : public QObject {
   void NetworkReplyReceived(QNetworkReply* reply);
 
  private:
-   TestnetStatusMonitor(const TestnetStatusMonitor&);
-   TestnetStatusMonitor& operator=(const TestnetStatusMonitor&);
+  TestnetStatusMonitor(const TestnetStatusMonitor&);
+  TestnetStatusMonitor& operator=(const TestnetStatusMonitor&);
 
-   std::unique_ptr<QNetworkAccessManager> network_access_manager_;
-
+  std::unique_ptr<QNetworkAccessManager> network_access_manager_;
 };
 
 }  // namespace safedrive
 
-#endif  // SAFEDRIVE_MODELS_TESTNET_STATUS_MONITOR_H_
+#endif  // CODE_003_VFS_DRIVE_MODELS_TESTNET_STATUS_MONITOR_H_
 

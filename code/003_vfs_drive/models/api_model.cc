@@ -26,6 +26,8 @@
 #include "helpers/qt_push_headers.h"
 #include "helpers/qt_pop_headers.h"
 
+#include "boost/filesystem.hpp"
+
 namespace ms = maidsafe;
 
 namespace safedrive {
@@ -34,11 +36,11 @@ APIModel::APIModel(QObject* parent)
     : QObject(parent),
       private_client_() {}
 
-bool APIModel::CreateAccount(const QString& /*pin*/, const QString& /*keyword*/, const QString& /*password*/) {
+bool APIModel::CreateAccount(const QString& pin, const QString& keyword, const QString& password) {
   try {
-    //    private_client_ = ms::PrivateClient::CreateAccount(keyword.toStdString(),
-    //                                                       std::stoi(pin.toStdString()),
-    //                                                       password.toStdString()).get();
+        private_client_ = ms::PrivateClient::CreateAccount(keyword.toStdString(),
+                                                           std::stoi(pin.toStdString()),
+                                                           password.toStdString()).get();
         return true;
   } catch(const ms::maidsafe_error& /*error_code*/) {
     emit createAccountErrorRaised("Error Creating Account");
@@ -48,11 +50,11 @@ bool APIModel::CreateAccount(const QString& /*pin*/, const QString& /*keyword*/,
   return false;
 }
 
-bool APIModel::Login(const QString& /*pin*/, const QString& /*keyword*/, const QString& /*password*/) {
+bool APIModel::Login(const QString& pin, const QString& keyword, const QString& password) {
   try {
-//    private_client_ = ms::PrivateClient::Login(keyword.toStdString(),
-//                                               std::stoi(pin.toStdString()),
-//                                               password.toStdString()).get();
+    private_client_ = ms::PrivateClient::Login(keyword.toStdString(),
+                                               std::stoi(pin.toStdString()),
+                                               password.toStdString()).get();
     return true;
   }
   catch (const ms::maidsafe_error& /*error_code*/) {
@@ -65,10 +67,32 @@ bool APIModel::Login(const QString& /*pin*/, const QString& /*keyword*/, const Q
 }
 
 QString APIModel::MountDrive() {
-  static bool error_simulator;  // simulate error
   try {
-    std::this_thread::sleep_for(std::chrono::seconds{2});  // simulate delay
-    if(!error_simulator) { error_simulator = true; throw ms::maidsafe_error{}; }
+    /*
+    auto& account_handler(private_client_->GetAccountHandler());
+
+    boost::filesystem::path drive_name{ms::RandomAlphaNumericString(32)};
+    boost::filesystem::path mount_path{boost::filesystem::unique_path(
+            boost::filesystem::temp_directory_path() / "MaidSafe_Private_Client_%%%%-%%%%-%%%%")};
+
+    ms::crypto::AES256Key symm_key{ms::RandomString(ms::crypto::AES256_KeySize)};
+    ms::crypto::AES256InitialisationVector symm_iv{ms::RandomString(ms::crypto::AES256_IVSize)};
+    ms::crypto::CipherText encrypted_maid{ms::passport::EncryptMaid(
+            account_handler.account().passport->GetMaid(),
+            symm_key, symm_iv)};
+
+    ms::drive::Options options;
+    options.mount_path = mount_path;
+    options.drive_name = drive_name;
+    options.unique_id = account_handler.account().unique_user_id;
+    options.root_parent_id = account_handler.account().root_parent_id;
+    options.encrypted_maid = encrypted_maid->string();
+    options.symm_key = symm_key.string();
+    options.symm_iv = symm_iv.string();
+    drive_launcher_.reset(new ms::drive::Launcher(options));
+    return QString::fromStdString(drive_launcher_->kMountPath().string());
+    */
+    std::this_thread::sleep_for(std::chrono::seconds{2});
     return QCoreApplication::applicationDirPath();
   }
   catch (const ms::maidsafe_error&) {
@@ -77,14 +101,14 @@ QString APIModel::MountDrive() {
   catch (...) {
     emit UnhandledException();
   }
-  return "";
+  return QString{""};
 }
 
 bool APIModel::UnmountDrive() {
   static bool error_simulator;  // simulate error
   try {
     std::this_thread::sleep_for(std::chrono::seconds{1});  // simulate delay
-    if(!error_simulator) { error_simulator = true; throw ms::maidsafe_error{}; }
+    if (!error_simulator) { error_simulator = true; throw ms::maidsafe_error{}; }
     return true;
   }
   catch (const ms::maidsafe_error&) {

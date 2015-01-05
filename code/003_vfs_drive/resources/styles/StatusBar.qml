@@ -126,10 +126,4 @@ Item {
     errorLabel.text = ""
     errorStatus.visible = false
   }
-
-  // :span- why? just make it a readonly alias like now done on the top - more natural and better
-  //        to listen to and take for other uses.
-  function isInProgressStatus() {
-    return progressStatus.isAnimationRunning
-  }
 }

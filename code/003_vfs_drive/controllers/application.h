@@ -16,8 +16,8 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#ifndef SAFEDRIVE_CONTROLLERS_APPLICATION_H_
-#define SAFEDRIVE_CONTROLLERS_APPLICATION_H_
+#ifndef CODE_003_VFS_DRIVE_CONTROLLERS_APPLICATION_H_
+#define CODE_003_VFS_DRIVE_CONTROLLERS_APPLICATION_H_
 
 // std
 #include <memory>
@@ -63,5 +63,5 @@ class Application : public QApplication {
 
 }  // namespace safedrive
 
-#endif  // SAFEDRIVE_CONTROLLERS_APPLICATION_H_
+#endif  // CODE_003_VFS_DRIVE_CONTROLLERS_APPLICATION_H_
 

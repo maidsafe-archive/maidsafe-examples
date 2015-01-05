@@ -16,8 +16,8 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#ifndef SAFEDRIVE_HELPERS_CUSTOM_MESSAGE_BOX_H_
-#define SAFEDRIVE_HELPERS_CUSTOM_MESSAGE_BOX_H_
+#ifndef CODE_003_VFS_DRIVE_HELPERS_CUSTOM_MESSAGE_BOX_H_
+#define CODE_003_VFS_DRIVE_HELPERS_CUSTOM_MESSAGE_BOX_H_
 
 // std
 #include <memory>
@@ -35,5 +35,5 @@ class CustomMessageBox {
 
 }  // namespace safedrive
 
-#endif  // SAFEDRIVE_HELPERS_CUSTOM_MESSAGE_BOX_H_
+#endif  // CODE_003_VFS_DRIVE_HELPERS_CUSTOM_MESSAGE_BOX_H_
 

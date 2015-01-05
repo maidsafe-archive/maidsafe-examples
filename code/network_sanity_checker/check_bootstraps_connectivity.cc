@@ -1,3 +1,21 @@
+/*  Copyright 2014 MaidSafe.net limited
+
+    This MaidSafe Software is licensed to you under (1) the MaidSafe.net Commercial License,
+    version 1.0 or later, or (2) The General Public License (GPL), version 3, depending on which
+    licence you accepted on initial access to the Software (the "Licences").
+
+    By contributing code to the MaidSafe Software, or to this project generally, you agree to be
+    bound by the terms of the MaidSafe Contributor Agreement, version 1.0, found in the root
+    directory of this project at LICENSE, COPYING and CONTRIBUTOR respectively and also
+    available at: http://www.maidsafe.net/licenses
+
+    Unless required by applicable law or agreed to in writing, the MaidSafe Software distributed
+    under the GPL Licence is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+    OF ANY KIND, either express or implied.
+
+    See the Licences for the specific language governing permissions and limitations relating to
+    use of the MaidSafe Software.                                                                 */
+
 #include "check_bootstraps_connectivity.h"
 
 #include <exception>
@@ -6,6 +24,7 @@
 #include <map>
 #include <utility>
 #include <vector>
+#include <string>
 
 #include "boost/asio/ip/udp.hpp"
 #include "maidsafe/common/node_id.h"
@@ -39,7 +58,8 @@ void HandleResult(std::pair<const udp::endpoint, std::future<int>>& result,
                   std::ofstream& results_fstream) {
   std::string closer{ is_last_result ? " }\n" : " },\n" };
   try {
-    results_fstream << "    { \"contact\": \"" << result.first << "\", \"canConnect\": " << std::boolalpha;
+    results_fstream << "    { \"contact\": \"" << result.first
+                    << "\", \"canConnect\": " << std::boolalpha;
     int code{ result.second.get() };
     if (code == maidsafe::rudp::kSuccess) {
       results_fstream << true << closer;
@@ -57,12 +77,18 @@ void HandleResult(std::pair<const udp::endpoint, std::future<int>>& result,
 
 void CheckBootstrapsConnectivity(std::ofstream& results_fstream) {
   std::map<udp::endpoint, std::future<int>> results;
-  results.emplace(udp::endpoint{ address::from_string("23.239.27.245"),  maidsafe::kLivePort }, std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("95.85.32.100"),   maidsafe::kLivePort }, std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("104.131.253.66"), maidsafe::kLivePort }, std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("106.185.24.221"), maidsafe::kLivePort }, std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("128.199.159.50"), maidsafe::kLivePort }, std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("178.79.156.73"),  maidsafe::kLivePort }, std::future<int>{});
+  results.emplace(udp::endpoint{ address::from_string("23.239.27.245"),  maidsafe::kLivePort },
+                  std::future<int>{});
+  results.emplace(udp::endpoint{ address::from_string("95.85.32.100"),   maidsafe::kLivePort },
+                  std::future<int>{});
+  results.emplace(udp::endpoint{ address::from_string("104.131.253.66"), maidsafe::kLivePort },
+                  std::future<int>{});
+  results.emplace(udp::endpoint{ address::from_string("106.185.24.221"), maidsafe::kLivePort },
+                  std::future<int>{});
+  results.emplace(udp::endpoint{ address::from_string("128.199.159.50"), maidsafe::kLivePort },
+                  std::future<int>{});
+  results.emplace(udp::endpoint{ address::from_string("178.79.156.73"),  maidsafe::kLivePort },
+                  std::future<int>{});
 
   for (auto& result : results)
     result.second = CanConnect(result.first);

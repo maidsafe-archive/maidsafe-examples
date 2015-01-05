@@ -42,10 +42,6 @@ SystemTray::SystemTray()
   setContextMenu(menu_);
 }
 
-
-// :span- It shouldn't require you to reach this page to show the Action. Think if you reach login page
-//        and accidently closed the window. The sys-tray only has an option to quit which is strange
-//        because why to have sys-tray at all then.
 void SystemTray::SetIsLoggedIn(bool is_logged_in) {
   is_logged_in_ = is_logged_in;
   open_drive_->setVisible(is_logged_in_);

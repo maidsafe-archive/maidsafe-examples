@@ -16,8 +16,8 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#ifndef SAFEDRIVE_CONTROLLERS_MAIN_CONTROLLER_H_
-#define SAFEDRIVE_CONTROLLERS_MAIN_CONTROLLER_H_
+#ifndef CODE_003_VFS_DRIVE_CONTROLLERS_MAIN_CONTROLLER_H_
+#define CODE_003_VFS_DRIVE_CONTROLLERS_MAIN_CONTROLLER_H_
 
 // std
 #include <memory>
@@ -38,7 +38,8 @@ class MainController : public QObject {
   Q_PROPERTY(ShowView currentView READ currentView NOTIFY currentViewChanged FINAL)
 
  public:
-  // :span- In future possibly keep multiple controllers and distribute enums accordingly among them.
+  // TODO(spandan) In future possibly keep multiple controllers and distribute
+  // enums accordingly among them.
   enum ShowView {
     Login,
     CreateAccount,
@@ -95,5 +96,5 @@ class MainController : public QObject {
 
 }  // namespace safedrive
 
-#endif  // SAFEDRIVE_CONTROLLERS_MAIN_CONTROLLER_H_
+#endif  // CODE_003_VFS_DRIVE_CONTROLLERS_MAIN_CONTROLLER_H_
 

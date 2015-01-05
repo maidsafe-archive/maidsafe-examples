@@ -47,7 +47,6 @@ Item {
     anchors { top: verticalSpacer.bottom; left: parent.left; leftMargin: 15 }
     spacing: 8
 
-    opacity: !statusBar.isInProgress / 2 + 0.5
     enabled: !statusBar.isInProgress
 
 //    Image {
@@ -59,6 +58,7 @@ Item {
       height: 30
       width: 15
       color: DefaultBrushes.labelGray
+      opacity: safeDriveText.opacity
     }
 
     Text {
@@ -66,7 +66,7 @@ Item {
 
       text: qsTr("SAFE Drive")
       font { family: "Arial"; pointSize: DefaultProperties.subHeaderFontPointSize }
-
+      opacity: mainController.currentView === MainController.UnmountOrOpenDrive ? 1 : 0.5
       anchors { verticalCenter: parent.verticalCenter }
       color: DefaultBrushes.labelGray
     }
@@ -80,7 +80,7 @@ Item {
       id: openDriveImage
       anchors { verticalCenter: parent.verticalCenter }
       source: "qrc:/resources/icons/open_drive.png"
-      opacity: mainController.currentView === MainController.UnmountOrOpenDrive
+      opacity: mainController.currentView === MainController.UnmountOrOpenDrive ? !statusBar.isInProgress / 2 + 0.5 : 0
       enabled: opacity
 
       MouseArea {
@@ -96,6 +96,7 @@ Item {
       source: mainController.currentView === MainController.MountDrive ?
                 "qrc:/resources/icons/mount_drive.png" : "qrc:/resources/icons/unmount_drive.png"
 
+      opacity: !statusBar.isInProgress / 2 + 0.5
       MouseArea {
         anchors.fill: parent
         onClicked: {

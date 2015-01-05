@@ -16,8 +16,8 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#ifndef SAFEDRIVE_CONTROLLERS_SYSTEM_TRAY_H_
-#define SAFEDRIVE_CONTROLLERS_SYSTEM_TRAY_H_
+#ifndef CODE_003_VFS_DRIVE_CONTROLLERS_SYSTEM_TRAY_H_
+#define CODE_003_VFS_DRIVE_CONTROLLERS_SYSTEM_TRAY_H_
 
 #include <string>
 
@@ -54,4 +54,4 @@ class SystemTray : public QSystemTrayIcon {
 
 }  // namespace safedrive
 
-#endif  // SAFEDRIVE_CONTROLLERS_SYSTEM_TRAY_H_
+#endif  // CODE_003_VFS_DRIVE_CONTROLLERS_SYSTEM_TRAY_H_

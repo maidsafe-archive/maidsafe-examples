@@ -16,10 +16,9 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#ifndef SAFEDRIVE_MODELS_API_MODEL_H_
-#define SAFEDRIVE_MODELS_API_MODEL_H_
+#ifndef CODE_003_VFS_DRIVE_MODELS_API_MODEL_H_
+#define CODE_003_VFS_DRIVE_MODELS_API_MODEL_H_
 
-// std
 #include <memory>
 #include <string>
 
@@ -29,6 +28,7 @@
 #include "helpers/qt_pop_headers.h"
 
 #include "maidsafe.h"
+#include "maidsafe/drive/tools/launcher.h"
 
 namespace safedrive {
 
@@ -54,9 +54,10 @@ class APIModel : public QObject {
   APIModel(const APIModel&);
   APIModel& operator=(const APIModel&);
   std::unique_ptr<maidsafe::PrivateClient> private_client_;
+  std::unique_ptr<maidsafe::drive::Launcher> drive_launcher_;
 };
 
 }  // namespace safedrive
 
-#endif  // SAFEDRIVE_MODELS_API_MODEL_H_
+#endif  // CODE_003_VFS_DRIVE_MODELS_API_MODEL_H_
 
