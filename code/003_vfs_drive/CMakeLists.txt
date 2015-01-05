@@ -91,7 +91,7 @@ add_executable(${PROJECT_NAME} ${UiMain}
                                ${ViewsAllFiles}
                                ${UiAppIconResource})
 
-target_link_libraries(${PROJECT_NAME} maidsafe_api maidsafe_drive ${Qt5TargetLibs} "-ldl")
+target_link_libraries(${PROJECT_NAME} maidsafe_api maidsafe_drive ${Qt5TargetLibs})
 if(COMMAND apply_target_properties)  # Available if run from maidsafe-examples root
   apply_target_properties(${PROJECT_NAME})
 endif()
