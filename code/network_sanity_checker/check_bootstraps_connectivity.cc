@@ -53,21 +53,19 @@ std::future<int> CanConnect(const udp::endpoint& contact) {
   });
 }
 
-void HandleResult(std::pair<const udp::endpoint, std::future<int>>& result,
-                  bool is_last_result,
+void HandleResult(std::pair<const udp::endpoint, std::future<int>>& result, bool is_last_result,
                   std::ofstream& results_fstream) {
-  std::string closer{ is_last_result ? " }\n" : " },\n" };
+  std::string closer{is_last_result ? " }\n" : " },\n"};
   try {
     results_fstream << "    { \"contact\": \"" << result.first
                     << "\", \"canConnect\": " << std::boolalpha;
-    int code{ result.second.get() };
+    int code{result.second.get()};
     if (code == maidsafe::rudp::kSuccess) {
       results_fstream << true << closer;
       return;
     }
     std::cout << "Failed to connect to " << result.first << " with return code " << code << '\n';
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     std::cout << "Exception trying to connect to " << result.first << ": " << e.what() << '\n';
   }
   results_fstream << false << closer;
@@ -77,17 +75,17 @@ void HandleResult(std::pair<const udp::endpoint, std::future<int>>& result,
 
 void CheckBootstrapsConnectivity(std::ofstream& results_fstream) {
   std::map<udp::endpoint, std::future<int>> results;
-  results.emplace(udp::endpoint{ address::from_string("23.239.27.245"),  maidsafe::kLivePort },
+  results.emplace(udp::endpoint{address::from_string("23.239.27.245"), maidsafe::kLivePort},
                   std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("95.85.32.100"),   maidsafe::kLivePort },
+  results.emplace(udp::endpoint{address::from_string("95.85.32.100"), maidsafe::kLivePort},
                   std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("104.131.253.66"), maidsafe::kLivePort },
+  results.emplace(udp::endpoint{address::from_string("104.131.253.66"), maidsafe::kLivePort},
                   std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("106.185.24.221"), maidsafe::kLivePort },
+  results.emplace(udp::endpoint{address::from_string("106.185.24.221"), maidsafe::kLivePort},
                   std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("128.199.159.50"), maidsafe::kLivePort },
+  results.emplace(udp::endpoint{address::from_string("128.199.159.50"), maidsafe::kLivePort},
                   std::future<int>{});
-  results.emplace(udp::endpoint{ address::from_string("178.79.156.73"),  maidsafe::kLivePort },
+  results.emplace(udp::endpoint{address::from_string("178.79.156.73"), maidsafe::kLivePort},
                   std::future<int>{});
 
   for (auto& result : results)
