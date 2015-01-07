@@ -16,30 +16,24 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include "maidsafe/common/config.h"
-#include "maidsafe/common/log.h"
-#include "check_bootstraps_connectivity.h"
+import QtQuick 2.2
+import SAFEdrive 1.0
+import "../resources/styles"
 
-int main(int argc, char* argv[]) {
-  maidsafe::log::Logging::Instance().Initialise(argc, argv);
+CustomWindow {
+  id: rootWindow
 
-  try {
-    // Open an ofstream managed by a unique_ptr which closes the stream on destruction.
-    auto close_and_delete([](std::ofstream* output) {
-      output->close();
-      delete output;
-    });
-    std::string output_path{(maidsafe::ThisExecutableDir() / "results.json").string()};
-    std::unique_ptr<std::ofstream, decltype(close_and_delete)> results_fstream(
-        new std::ofstream{output_path, std::ios::trunc}, close_and_delete);
+  contentSource: mainController.currentView === MainController.Login ?
+                   "Login.qml"
+                 :
+                   mainController.currentView === MainController.CreateAccount ?
+                     "CreateAccount.qml"
+                   :
+                     mainController.currentView === MainController.TestnetStatus ?
+                       "TestnetStatus.qml"
+                     :
+                       "OpenDrive.qml"
 
-    CheckBootstrapsConnectivity(*results_fstream);
-  } catch (const std::exception& e) {
-    std::cout << "Error: " << e.what();
-    return -1;
-  }
-  return 0;
+  onClosing: if(!(mainController.currentView === MainController.MountDrive ||
+                  mainController.currentView === MainController.UnmountOrOpenDrive)) { Qt.quit() }
 }

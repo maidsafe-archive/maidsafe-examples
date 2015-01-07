@@ -16,30 +16,34 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#include <fstream>
+#include "models/testnet_status_monitor.h"
 #include <iostream>
-#include <memory>
-#include "maidsafe/common/config.h"
-#include "maidsafe/common/log.h"
-#include "check_bootstraps_connectivity.h"
 
-int main(int argc, char* argv[]) {
-  maidsafe::log::Logging::Instance().Initialise(argc, argv);
+namespace safedrive {
 
-  try {
-    // Open an ofstream managed by a unique_ptr which closes the stream on destruction.
-    auto close_and_delete([](std::ofstream* output) {
-      output->close();
-      delete output;
-    });
-    std::string output_path{(maidsafe::ThisExecutableDir() / "results.json").string()};
-    std::unique_ptr<std::ofstream, decltype(close_and_delete)> results_fstream(
-        new std::ofstream{output_path, std::ios::trunc}, close_and_delete);
-
-    CheckBootstrapsConnectivity(*results_fstream);
-  } catch (const std::exception& e) {
-    std::cout << "Error: " << e.what();
-    return -1;
-  }
-  return 0;
+TestnetStatusMonitor::TestnetStatusMonitor(QObject* parent)
+  : QObject(parent),
+    network_access_manager_(new QNetworkAccessManager(this)) {
+  connect(network_access_manager_.get(), SIGNAL(finished(QNetworkReply*)),             // NOLINT - Viv
+          this,                          SLOT(NetworkReplyReceived(QNetworkReply*)));  // NOLINT - Viv
 }
+
+void TestnetStatusMonitor::isTestnetAvailable() {
+  QUrl url("http://visualiser.maidsafe.net:8080/backend/testnetStatus");
+  network_access_manager_->get(QNetworkRequest(url));
+}
+
+void TestnetStatusMonitor::NetworkReplyReceived(QNetworkReply* reply) {
+  if (reply->error() != QNetworkReply::NoError) {
+    emit testnetStatusReceived(false);
+    return;
+  }
+
+  QString data = static_cast<QString>(reply->readAll());
+  QScriptEngine engine;
+  QScriptValue is_available = engine.evaluate("(" + data + ")").property("isReady");
+  emit testnetStatusReceived(is_available.toBool());
+  delete reply;
+}
+
+}  // namespace safedrive

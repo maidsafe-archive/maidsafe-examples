@@ -1,4 +1,4 @@
-/*  Copyright 2014 MaidSafe.net limited
+/*  Copyright 2012 MaidSafe.net limited
 
     This MaidSafe Software is licensed to you under (1) the MaidSafe.net Commercial License,
     version 1.0 or later, or (2) The General Public License (GPL), version 3, depending on which
@@ -16,30 +16,25 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include "maidsafe/common/config.h"
-#include "maidsafe/common/log.h"
-#include "check_bootstraps_connectivity.h"
+.pragma library
 
-int main(int argc, char* argv[]) {
-  maidsafe::log::Logging::Instance().Initialise(argc, argv);
+var focusBlack = "#1C1C1B"
+var white = "#FFFFFF"
 
-  try {
-    // Open an ofstream managed by a unique_ptr which closes the stream on destruction.
-    auto close_and_delete([](std::ofstream* output) {
-      output->close();
-      delete output;
-    });
-    std::string output_path{(maidsafe::ThisExecutableDir() / "results.json").string()};
-    std::unique_ptr<std::ofstream, decltype(close_and_delete)> results_fstream(
-        new std::ofstream{output_path, std::ios::trunc}, close_and_delete);
+var selectionBlue = "#D4E4F4"
+var lightBlue = "#88B8E4"
+var normalBlue = "#5791CD"
+var darkBlue = "#457BAF"
+var darkerBlue = "#1D5086"
 
-    CheckBootstrapsConnectivity(*results_fstream);
-  } catch (const std::exception& e) {
-    std::cout << "Error: " << e.what();
-    return -1;
-  }
-  return 0;
-}
+var disabledGray = "#DADAD9"
+var lightGray = "#ECECEC"
+var darkerGray = "#B2B2B1"
+var labelGray = "#6F6F6E"
+var borderGray = "#9D9C9C"
+var playerTimeLineGray = "#4D4D4D"
+
+var darkRed = "#981919"
+var normalRed = "#E6332A"
+
+var transparent = "#00000000"

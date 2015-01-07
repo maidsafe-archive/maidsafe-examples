@@ -16,30 +16,24 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#include <fstream>
-#include <iostream>
+#ifndef CODE_003_VFS_DRIVE_HELPERS_CUSTOM_MESSAGE_BOX_H_
+#define CODE_003_VFS_DRIVE_HELPERS_CUSTOM_MESSAGE_BOX_H_
+
+// std
 #include <memory>
-#include "maidsafe/common/config.h"
-#include "maidsafe/common/log.h"
-#include "check_bootstraps_connectivity.h"
+#include <string>
 
-int main(int argc, char* argv[]) {
-  maidsafe::log::Logging::Instance().Initialise(argc, argv);
+#include "helpers/qt_push_headers.h"
+#include "helpers/qt_pop_headers.h"
 
-  try {
-    // Open an ofstream managed by a unique_ptr which closes the stream on destruction.
-    auto close_and_delete([](std::ofstream* output) {
-      output->close();
-      delete output;
-    });
-    std::string output_path{(maidsafe::ThisExecutableDir() / "results.json").string()};
-    std::unique_ptr<std::ofstream, decltype(close_and_delete)> results_fstream(
-        new std::ofstream{output_path, std::ios::trunc}, close_and_delete);
+namespace safedrive {
 
-    CheckBootstrapsConnectivity(*results_fstream);
-  } catch (const std::exception& e) {
-    std::cout << "Error: " << e.what();
-    return -1;
-  }
-  return 0;
-}
+class CustomMessageBox {
+ public:
+  static void Show(const QString& message, QMessageBox::Icon icon);
+};
+
+}  // namespace safedrive
+
+#endif  // CODE_003_VFS_DRIVE_HELPERS_CUSTOM_MESSAGE_BOX_H_
+

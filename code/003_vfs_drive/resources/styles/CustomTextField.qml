@@ -16,30 +16,38 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include "maidsafe/common/config.h"
-#include "maidsafe/common/log.h"
-#include "check_bootstraps_connectivity.h"
+import QtQuick 2.1
+import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
+import "../js/brushes.js" as DefaultBrushes
 
-int main(int argc, char* argv[]) {
-  maidsafe::log::Logging::Instance().Initialise(argc, argv);
+TextField {
+  FontLoader { id: arialFont; name: "Arial" }
 
-  try {
-    // Open an ofstream managed by a unique_ptr which closes the stream on destruction.
-    auto close_and_delete([](std::ofstream* output) {
-      output->close();
-      delete output;
-    });
-    std::string output_path{(maidsafe::ThisExecutableDir() / "results.json").string()};
-    std::unique_ptr<std::ofstream, decltype(close_and_delete)> results_fstream(
-        new std::ofstream{output_path, std::ios::trunc}, close_and_delete);
+  property bool isMarkerTextVisible : true
 
-    CheckBootstrapsConnectivity(*results_fstream);
-  } catch (const std::exception& e) {
-    std::cout << "Error: " << e.what();
-    return -1;
+  font.pixelSize: 12
+  horizontalAlignment: Qt.AlignHCenter
+  style: TextFieldStyle {
+    background: Rectangle {
+      border {
+        color: {
+          if (!control.enabled) {
+            DefaultBrushes.disabledGray
+          } else if (control.activeFocus) {
+            DefaultBrushes.focusBlack
+          } else {
+            DefaultBrushes.borderGray
+          }
+        }
+        width: 1
+      }
+      implicitHeight: 30
+      implicitWidth: 225
+    }
+    font: arialFont.name
+    selectionColor: DefaultBrushes.selectionBlue
+    selectedTextColor: DefaultBrushes.focusBlack
+    textColor: !control.enabled ? DefaultBrushes.disabledGray : DefaultBrushes.focusBlack
   }
-  return 0;
 }

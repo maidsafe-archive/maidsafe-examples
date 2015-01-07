@@ -16,30 +16,36 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include "maidsafe/common/config.h"
-#include "maidsafe/common/log.h"
-#include "check_bootstraps_connectivity.h"
+import QtQuick 2.1
+import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
+import "../js/brushes.js" as DefaultBrushes
 
-int main(int argc, char* argv[]) {
-  maidsafe::log::Logging::Instance().Initialise(argc, argv);
-
-  try {
-    // Open an ofstream managed by a unique_ptr which closes the stream on destruction.
-    auto close_and_delete([](std::ofstream* output) {
-      output->close();
-      delete output;
-    });
-    std::string output_path{(maidsafe::ThisExecutableDir() / "results.json").string()};
-    std::unique_ptr<std::ofstream, decltype(close_and_delete)> results_fstream(
-        new std::ofstream{output_path, std::ios::trunc}, close_and_delete);
-
-    CheckBootstrapsConnectivity(*results_fstream);
-  } catch (const std::exception& e) {
-    std::cout << "Error: " << e.what();
-    return -1;
+Button {
+  style: ButtonStyle {
+    background: Rectangle {
+      antialiasing: true
+      border {
+        color: DefaultBrushes.transparent
+        width: 0
+      }
+      color: DefaultBrushes.transparent
+      implicitHeight: 30
+    }
+    label: Label {
+      anchors.fill: parent
+      color: control.enabled && !control.pressed && control.hovered ? DefaultBrushes.focusBlack : DefaultBrushes.labelGray
+      font {
+        family: "Arial"
+        pixelSize: 14
+      }
+      horizontalAlignment: Qt.AlignHCenter
+      text: control.text
+      verticalAlignment: Qt.AlignVCenter
+    }
   }
-  return 0;
+
+  Keys.onEnterPressed: clicked();
+  Keys.onReturnPressed: clicked();
+  Keys.onSpacePressed: clicked();
 }

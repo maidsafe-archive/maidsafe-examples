@@ -16,30 +16,42 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#include <fstream>
 #include <iostream>
-#include <memory>
+
+#include "helpers/qt_push_headers.h"
+#include "helpers/qt_pop_headers.h"
+
+#include "controllers/application.h"
+#include "controllers/main_controller.h"
+
 #include "maidsafe/common/config.h"
 #include "maidsafe/common/log.h"
-#include "check_bootstraps_connectivity.h"
 
-int main(int argc, char* argv[]) {
-  maidsafe::log::Logging::Instance().Initialise(argc, argv);
+int main(int argc, char *argv[]) {
+  safedrive::Application application(argc, argv);
+  auto log_options(maidsafe::log::Logging::Instance().Initialise(argc, argv));
+
+#ifdef MAIDSAFE_WIN32
+  // Check and exit if duplicate instance
+  if (!application.IsUniqueInstance())
+    return 0;
+#endif
+
+  application.addLibraryPath(qApp->applicationDirPath() + "/plugins");
+  application.setOrganizationDomain("http://www.maidsafe.net");
+  application.setOrganizationName("MaidSafe.net Ltd.");
+  application.setApplicationName("SAFEdrive");
 
   try {
-    // Open an ofstream managed by a unique_ptr which closes the stream on destruction.
-    auto close_and_delete([](std::ofstream* output) {
-      output->close();
-      delete output;
-    });
-    std::string output_path{(maidsafe::ThisExecutableDir() / "results.json").string()};
-    std::unique_ptr<std::ofstream, decltype(close_and_delete)> results_fstream(
-        new std::ofstream{output_path, std::ios::trunc}, close_and_delete);
-
-    CheckBootstrapsConnectivity(*results_fstream);
-  } catch (const std::exception& e) {
-    std::cout << "Error: " << e.what();
+    safedrive::MainController main_controller;
+    application.SetErrorHandler(main_controller);
+    return application.exec();
+  } catch(const std::exception& ex) {
+    std::cerr << "STD Exception Caught: " << ex.what();
+    return -1;
+  } catch(...) {
+    std::cerr << "Default Exception Caught";
     return -1;
   }
-  return 0;
 }
+

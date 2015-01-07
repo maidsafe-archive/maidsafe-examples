@@ -16,30 +16,42 @@
     See the Licences for the specific language governing permissions and limitations relating to
     use of the MaidSafe Software.                                                                 */
 
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include "maidsafe/common/config.h"
-#include "maidsafe/common/log.h"
-#include "check_bootstraps_connectivity.h"
+#ifndef CODE_003_VFS_DRIVE_CONTROLLERS_SYSTEM_TRAY_H_
+#define CODE_003_VFS_DRIVE_CONTROLLERS_SYSTEM_TRAY_H_
 
-int main(int argc, char* argv[]) {
-  maidsafe::log::Logging::Instance().Initialise(argc, argv);
+#include <string>
 
-  try {
-    // Open an ofstream managed by a unique_ptr which closes the stream on destruction.
-    auto close_and_delete([](std::ofstream* output) {
-      output->close();
-      delete output;
-    });
-    std::string output_path{(maidsafe::ThisExecutableDir() / "results.json").string()};
-    std::unique_ptr<std::ofstream, decltype(close_and_delete)> results_fstream(
-        new std::ofstream{output_path, std::ios::trunc}, close_and_delete);
+#include "helpers/qt_push_headers.h"
+#include "helpers/qt_pop_headers.h"
 
-    CheckBootstrapsConnectivity(*results_fstream);
-  } catch (const std::exception& e) {
-    std::cout << "Error: " << e.what();
-    return -1;
-  }
-  return 0;
-}
+class QMenu;
+class QAction;
+
+namespace safedrive {
+
+class SystemTray : public QSystemTrayIcon {
+  Q_OBJECT
+
+ public:
+  SystemTray();
+  ~SystemTray();
+  void SetIsLoggedIn(bool is_logged_in);
+
+ signals:  // NOLINT - Viv
+  void ShowSafeDriveRequested();
+
+ private slots:  // NOLINT - Viv
+  void OnSystrayActivate(QSystemTrayIcon::ActivationReason reason);
+
+ private:
+  SystemTray(const SystemTray&);
+  SystemTray& operator=(const SystemTray&);
+
+  QMenu* menu_;
+  QAction* open_drive_;
+  bool is_logged_in_;
+};
+
+}  // namespace safedrive
+
+#endif  // CODE_003_VFS_DRIVE_CONTROLLERS_SYSTEM_TRAY_H_
