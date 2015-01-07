@@ -1,52 +1,40 @@
 # Configuración de una Red local
 
-So now that you have the build environment set up on your machine, the target we require for this example is '**local_network_controller**'. This serves as a client to connect to the vault manager and start the network with a bunch of vaults which we can then connect to in future examples.
+Ahora que ya tenés el entorno de compilación configurado en tu computadora, el 'target' de compilación que necesitamos para este ejemplo es '**local_network_controller**'. Esta herramienta actúa como un cliente para conectarse al 'Vault Manager' y ejecuta la red con un conjunto de 'Vaults' a los que podremos conectarnos con otros ejemplos en el futuro.
 
-* Build the target `local_network_controller`
+* Compilá el 'target' de compilación `local_network_controller`
+* Ejecutá la herramienta y deberías ver algo como lo siguiente:
 
- #### Unix Makefiles:
-From your MaidSafe Super project's build folder, run
+> Consejo: Si deseás ver información detallada de log, podés pasar los parámetros `--log_* V` cuando ejecutás la herramienta.  Para saber más acerca de todas las opciones de log disponibles, consultá [esta wiki](https://github.com/maidsafe/MaidSafe/wiki/Logging-Options#invoking-logging-arguments).
 
-      make local_network_controller
+![Controlador de la Red Local - Pantalla de Inicio](./img/start_screen.PNG)
 
- #### MSVC / XCode:
-You can build the target `local_network_controller` from the MaidSafe Super project's solution/xcodeproj.
+Para este ejemplo debemos seleccionar la opción "1". Tipeá "1" y luego Enter. Esto crea una nueva red local en esta misma computadora.
 
+Podés proveer cofiguraciones personalizadas para cada una de las opciones de esta herramienta como ser el "Path para ejecutable del Vault" o el "Número de Vaults a ejecutarse en la red". Con los valores por defecto, deberías ver la herramienta ejecutarse de la siguiente manera
 
-* Run the tool and you should see something like:
+![Controlador de la Red Local - Directorio Raíz del 'Vault Manager'](./img/vault_manager_root.PNG)
 
-> Tip: If you want to see detailed logging info, you can pass `--log_* V` when invoking the tool.  For full logging options, see [this wiki page](https://github.com/maidsafe/MaidSafe/wiki/Logging-Options#invoking-logging-arguments).
+![Controlador de la Red Local - Directorio del ejecutable del 'Vault'](./img/vault_executable.PNG)
 
-![Local Network Controller - Start Screen](./img/start_screen.PNG)
+![Controlador de la Red Local - Puerto](./img/listening_port.PNG)
 
-For this example we are going to go with option "1". Hit "1" and Enter. This lets us start a new network on this machine.
-
-You can provide custom settings where applicable for the various options in the tool such as "Path to vault Executable" or "Number of Vaults to run the network with". Following the default options, you should see the tool function such as
-
-![Local Network Controller - Vault Manager Root Path](./img/vault_manager_root.PNG)
-
-![Local Network Controller - Vault App Path](./img/vault_executable.PNG)
-
-![Local Network Controller - Listening port](./img/listening_port.PNG)
-
-![Local Network Controller - Vault Count](./img/vaults_count.PNG)
+![Controlador de la Red Local - Número de Vaults](./img/vaults_count.PNG)
 
 
-Now with the default option for "Vault count" the tool sets up a network with 12 Vaults (**this process may take a few minutes**). There are 2 extra vaults (zero state nodes) that are created as part of this process which get destroyed during the bootstrap phase.
+Con el valor por defecto para la opción "Número de Vaults" la herramienta configura una red con 16 'Vaults' (**este proceso puede durar varios minutos**). Hay 2 vaults adicionales (zero state nodes) que son creados durante este proceso y que son destruídos durante la fase de inicialización de la red.
 
-The issue is that for a brand new (i.e. "zero state") network, the Vaults aren't able to validate who they are connecting to, since no Vault has properly registered itself onto the network.  Vault registration involves storing the Vault's public keys onto the network - clearly this can't have happened *before* the network exists!
+El problema es que en una red nueva (es decir recien creada), los 'Vaults' no pueden validar a donde se están conectando, dado que ningún 'Vault' se ha registrado a la red.  El proceso de registración de un 'Vault' implica almacenar la clave pública del 'Vault' en la red - claramente esto no podría suceder *antes* de que la red exista!
 
-To get round this, we create a bundle of keys (one per vault) before the network starts, and the vault manager distributes the full list to each Vault it starts.  Thus the Vaults can cheat and get any of the initial peers' keys from this list rather than from the network.
+Para darle una solución a este problema, se crea un conjunto de claves (una por cada vault) antes de que se inicie la red, y el 'vault manager' distribuye la lista completa a cada 'Vault' que éste va iniciando.  De esta manera los 'Vaults' pueden obtener la clave de cualquiera de los otros 'Vaults' desde dicha lista en vez de obtenerla desde de la red.
 
-Once the network has started, the tool proceeds to store the public keys to the network properly, and at that stage, the network can behave normally.
+Una vez que la red se ha iniciado, la herramienta procede a almacenar las claves públicas en la red, y en ese momento, la red puede funcionar normalmente.
 
-Each Vault needs to be connected to a minimum number of peer Vaults before it considers itself joined to the network.  For this reason the tool enforces a minimum local network size  (currently 10).
+Cada 'Vault' necesita estar conectado a un mínimo número de otros 'Vaults' antes de que él mismo se considere parte de la red.  Por esta razón la herramienta exige un tamaño mínimo para la red local (actualmente 16).
 
-Provided everything runs fine, you should now see something like:
+Asumiendo que todo se ejecutó correctamente, deberías ver algo parecido a la siguiente pantalla:
 
-![Local Network Controller - Network Started](./img/network_started.PNG)
-
-
-As the message in the screenshot explains, we need to keep this tool running to keep the test network alive on this machine. That brings us to the end of this Example. If you're reading this, we hope you've got a test net running on your machine, so gratz!!
+![Controlador de la Red Local - Red Iniciada](./img/network_started.PNG)
 
 
+Tal como lo indica el mensaje en la pantalla, debemos mantener esta herramienta ejecutándose para tener la red corriendo localmente en esta computadora. Con esto damos por finalizado este Ejemplo. Si estás leyendo esto, esperamos que hayas logrado tener tu red ejecutándose localmente en tu computadora, así es que felicitaciones!!
